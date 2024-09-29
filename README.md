@@ -7,7 +7,7 @@
 
 - Checkout the `main` branch.
 - Make sure `git status` is clean.
-- Create a new branch from the `main` branch with the following naming convention: `playground-XYZ`. For instance, if you're creating a Rect/Next.js playground, you can name the branch `playground-react-next`.
+- Create a new branch from the `main` branch with the following naming convention: `playground/XYZ`. For instance, if you're creating a Rect/Next.js playground, you can name the branch `playground/react-next`.
 - Now create the new project for `XYZ` for instance if you're creating a React/Next.js playground, you can run `npx create-next-app .` to create a new Next.js project.
 - Make sure the new folder is created for the new project and the project's files are not in the root of the repository.
 - If there are some common changes that you'd like to apply to the playground branches, you can apply them now. For instance for a Next.js playground you might want to apply the following changes:
@@ -19,6 +19,6 @@
 
 ## General Instructions
 - `main` branch is meant to be empty and should not be used for development.
-- `playground-XYZ` branches usually should not be changed unless there's a common change that you'd want to apply to all the future working branching or if you'd want to upgrade the playground to a different version.
+- `playground/XYZ` branches usually should not be changed unless there's a common change that you'd want to apply to all the future working branching or if you'd want to upgrade the playground to a different version.
 - If you're upgrading the playground to a different version, you can delete the playground branch on git and locally and follow the instructions above to create a new playground.
-- In order to use a playground, you can create a new branch from the playground branch for instance `XYZ-context-api` branch and start working on the new branch.
+- In order to use a playground, you can create a new branch from the playground branch for instance if you want to use `playgroun/XYZ`, create `XYZ/some-subject` branch and start working on the new branch.
