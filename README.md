@@ -1,5 +1,3 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
 ## Project Structure
 
 - `main` branch is the root branch of the project which is intentionally empty. All the playground branches should be created from the `main` branch.
