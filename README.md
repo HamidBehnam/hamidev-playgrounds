@@ -8,7 +8,7 @@
 - Checkout the `main` branch.
 - Make sure `git status` is clean.
 - Create a new branch from the `main` branch with the following naming convention: `playground/XYZ`. For instance, if you're creating a Rect/Next.js playground, you can name the branch `playground/react-next`.
-- Now create the new project for `XYZ` for instance if you're creating a React/Next.js playground, you can run `npx create-next-app .` to create a new Next.js project.
+- Now create the new project for `XYZ` for instance if you're creating a React/Next.js playground, you can run `npx create-next-app@latest` to create a new Next.js project.
 - Make sure the new folder is created for the new project and the project's files are not in the root of the repository.
 - If there are some common changes that you'd like to apply to the playground branches, you can apply them now. For instance for a Next.js playground you might want to apply the following changes:
   - Add some empty directories for instance `_actions`, `_components`, `_types` and so on. To ensure that git will track the directories, you can add an empty `.gitkeep` file to each directory.
