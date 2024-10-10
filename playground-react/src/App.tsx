@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
+import Sample from "./components/Sample/Sample";
 
 function App() {
   return (
     <div className="App">
-      <div>React Playground</div>
+      <Sample />
     </div>
   );
 }
