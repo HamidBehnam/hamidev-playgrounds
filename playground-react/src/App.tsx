@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
+import RadioCheckSelect from "./components/RadioCheckSelect";
 
 function App() {
   return (
     <div className="App">
-      <div>React Playground</div>
+      <RadioCheckSelect />
     </div>
   );
 }
