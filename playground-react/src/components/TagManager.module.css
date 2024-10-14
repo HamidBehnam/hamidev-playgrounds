@@ -1,0 +1,29 @@
+.tagsContainer {
+  border: 1px solid lightgray;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 10px;
+  row-gap: 10px;
+  width: 600px;
+}
+
+.tagsContainer input {
+  border: none;
+  border-bottom: 1px solid lightgray;
+}
+
+.tagItem {
+  background-color: lightgray;
+  padding: 10px 20px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.tagItem button {
+  border: none;
+  background-color: transparent;
+}
