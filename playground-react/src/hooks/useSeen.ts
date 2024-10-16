@@ -1,10 +1,11 @@
-import {MutableRefObject, useEffect, useState} from "react";
+import {RefObject, useEffect, useRef, useState} from "react";
 
-const useSeen = (elementRef: MutableRefObject<null>) => {
+const useSeen = <T extends HTMLElement>(): [RefObject<T>, boolean] => {
+  const ref = useRef<T>(null);
   const [seen, setSeen] = useState(false);
 
   useEffect(() => {
-    if (!elementRef.current) {
+    if (!ref.current) {
       return;
     }
 
@@ -15,12 +16,12 @@ const useSeen = (elementRef: MutableRefObject<null>) => {
       }
     }, {threshold: 1});
 
-    observer.observe(elementRef.current);
+    observer.observe(ref.current);
 
     return () => observer.disconnect();
   }, []);
 
-  return seen;
+  return [ref, seen];
 };
 
 export default useSeen;

@@ -1,10 +1,8 @@
-import {useEffect, useRef, useState} from "react";
 import styles from './Agreement.module.css';
 import useSeen from "../../hooks/useSeen";
 
 const Agreement = () => {
-  const agreementSeenRef = useRef(null);
-  const seen = useSeen(agreementSeenRef);
+  const [ref, seen] = useSeen<HTMLDivElement>();
 
   // TODO: Moved the following code to a custom hook
   // const [seen, setSeen] = useState(false);
@@ -87,7 +85,7 @@ const Agreement = () => {
           lorem, non aliquet ex elit quis erat. Proin fringilla neque ut
           pharetra congue. Sed pharetra nec nunc a feugiat.
         </p>
-        <div className={"forObservation"} ref={agreementSeenRef} aria-hidden={true}></div>
+        <div className={"forObservation"} ref={ref} aria-hidden={true}></div>
       </div>
       <div>
         <button disabled={!seen}>I accept</button>
