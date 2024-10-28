@@ -34,11 +34,8 @@ const FormDynamic: FC = () => {
     const { value } = event.target;
 
     if (!touched.has(field.id)) {
-      console.log('here');
       setTouched(new Set(touched).add(field.id));
     }
-
-    console.log('errors: ', errors);
 
     dispatch({ type: 'SET_FIELDS', payload: state.fields.map(f => f.id === field.id ? { ...f, value } : f) });
   }, [state.fields, touched]);
