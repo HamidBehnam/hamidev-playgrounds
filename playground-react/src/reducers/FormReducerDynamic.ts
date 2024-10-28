@@ -1,15 +1,11 @@
-import {Action, State} from "../types/StaticFormTypes";
-import {initialFormData} from "../constants/StaticFormConstants";
+import {FormAction, FormState} from "../types/FormTypesDynamic";
 
-export const staticFormReducer = (state: State, action: Action) => {
+const formReducerDynamic = (state: FormState, action: FormAction) => {
   switch (action.type) {
-    case 'SET_FORM_DATA':
+    case 'SET_FIELDS':
       return {
         ...state,
-        formData: {
-          ...state.formData,
-          [action.payload.name]: action.payload.value
-        }
+        fields: action.payload
       };
     case 'SUBMIT_FORM':
       return {
@@ -23,8 +19,7 @@ export const staticFormReducer = (state: State, action: Action) => {
         ...state,
         isLoading: false,
         success: true,
-        step: 1,
-        formData: initialFormData
+        error: null
       };
     case 'SUBMIT_FORM_ERROR':
       return {
@@ -37,3 +32,5 @@ export const staticFormReducer = (state: State, action: Action) => {
       return state;
   }
 };
+
+export default formReducerDynamic;

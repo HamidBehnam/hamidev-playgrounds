@@ -1,7 +1,7 @@
 import {ChangeEvent, FC, useId} from "react";
 import ValidationErrorMessage from "./ValidationErrorMessage";
 
-interface FormInputProps {
+export interface FormInputProps {
   type: string;
   id: string;
   name: string;

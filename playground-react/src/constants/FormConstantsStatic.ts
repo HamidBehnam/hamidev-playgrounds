@@ -1,4 +1,4 @@
-import { FormData, State } from '../types/StaticFormTypes';
+import { FormData, State } from '../types/FormTypesStatic';
 
 export const initialFormData: FormData = {
   name: '',

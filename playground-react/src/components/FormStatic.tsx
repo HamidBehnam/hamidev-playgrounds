@@ -1,20 +1,20 @@
 import {ChangeEvent, FC, FormEvent, useCallback, useEffect, useId, useReducer, useRef, useState} from "react";
-import styles from "./SampleForm.module.css";
+import styles from "./FormStatic.module.css";
 import useDebounce from "../hooks/useDebounce";
 import FormInput from "./FormInput";
 import FormTextArea from "./FormTextArea";
-import useValidation from "../hooks/useValidation";
-import {staticFormReducer} from "../reducers/StaticFormReducer";
-import {initialState} from "../constants/StaticFormConstants";
-import {FormData} from "../types/StaticFormTypes";
+import useValidationStatic from "../hooks/useValidationStatic";
+import {formReducerStatic} from "../reducers/FormReducerStatic";
+import {initialState} from "../constants/FormConstantsStatic";
+import {FormData} from "../types/FormTypesStatic";
 
 
-const StaticForm: FC = () => {
-  const [state, dispatch] = useReducer(staticFormReducer, initialState);
+const FormStatic: FC = () => {
+  const [state, dispatch] = useReducer(formReducerStatic, initialState);
   const [touched, setTouched] = useState(new Set<string>());
   const formDataDebounceSignal = useDebounce<FormData>(state.formData, 1000);
   const uniqueId = useId();
-  const [errors, validateForm] = useValidation(state.formData, touched);
+  const [errors, validateForm] = useValidationStatic(state.formData, touched);
 
   useEffect(() => {
     validateForm();
@@ -116,4 +116,4 @@ const StaticForm: FC = () => {
   );
 }
 
-export default StaticForm;
+export default FormStatic;

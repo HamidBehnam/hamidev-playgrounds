@@ -1,4 +1,4 @@
-import styles from "./SampleForm.module.css";
+import styles from "./ValidationErrorMessage.module.css";
 
 interface ValidationErrorMessageProps {
   id: string;

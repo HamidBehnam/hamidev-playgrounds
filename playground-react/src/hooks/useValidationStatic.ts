@@ -1,7 +1,7 @@
 import {useCallback, useState} from "react";
-import {FormData} from "../types/StaticFormTypes";
+import {FormData} from "../types/FormTypesStatic";
 
-const useValidation = (formData: FormData, touched: Set<string>)
+const useValidationStatic = (formData: FormData, touched: Set<string>)
   : [Map<string, string>, (thoroughValidation?: boolean) => boolean] => {
   const [errors, setErrors] = useState(new Map<string, string>());
 
@@ -42,4 +42,4 @@ const useValidation = (formData: FormData, touched: Set<string>)
   return [errors, validateForm];
 };
 
-export default useValidation;
+export default useValidationStatic;

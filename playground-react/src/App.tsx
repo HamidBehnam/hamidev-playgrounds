@@ -1,11 +1,14 @@
 import React from 'react';
 import './App.css';
-import StaticForm from "./components/StaticForm";
+import FormStatic from "./components/FormStatic";
+import FormDynamic from "./components/FormDynamic";
 
 function App() {
   return (
     <div className="App">
-      <StaticForm />
+      <FormStatic />
+      <hr />
+      <FormDynamic />
     </div>
   );
 }
