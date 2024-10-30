@@ -15,19 +15,25 @@ const tagsData: Tag[] = [
 
 const TagManager = () => {
   const [tags, setTags] = useState<Tag[]>(tagsData);
-  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+  const [selectedTags, setSelectedTags] = useState(new Map<string, Tag>());
   const [term, setTerm] = useState<string>('');
 
   const tagChangeHandler = (tag: Tag) => {
-    if (selectedTags.includes(tag)) {
-      setSelectedTags(selectedTags.filter(tagItem => tagItem !== tag));
+    let selectedTagsCopy = new Map(selectedTags);
+
+    if (selectedTags.has(tag.id)) {
+      selectedTagsCopy.delete(tag.id);
     } else {
-      setSelectedTags([...selectedTags, tag]);
+      selectedTagsCopy.set(tag.id, tag);
     }
+
+    setSelectedTags(selectedTagsCopy);
   };
 
   const deleteTagHandler = (tag: Tag) => {
-    setSelectedTags(selectedTags.filter(tagItem => tagItem !== tag));
+    let selectedTagsCopy = new Map(selectedTags);
+    selectedTagsCopy.delete(tag.id);
+    setSelectedTags(selectedTagsCopy);
   };
 
   useEffect(() => {
@@ -43,12 +49,12 @@ const TagManager = () => {
   return (
     <div>
       <div className={styles.tagsContainer}>
-        {selectedTags.map((tagItem, index) => (
-          <div key={tagItem.id} className={styles.tagItem}>
+        {Array.from(selectedTags).map(([tagId, tag], index) => (
+          <div key={tagId} className={styles.tagItem}>
             <div>
-              {tagItem.title}
+              {tag.title}
             </div>
-            <button onClick={() => deleteTagHandler(tagItem)}>X</button>
+            <button onClick={() => deleteTagHandler(tag)}>X</button>
           </div>
         ))}
         <input type={'text'} value={term} onChange={(event) => setTerm(event.target.value)}/>
@@ -57,7 +63,7 @@ const TagManager = () => {
         {tags && tags.map(tag => (
           <div key={tag.id}>
             <label>
-              <input type={'checkbox'} name={'tags'} value={tag.title} checked={selectedTags.includes(tag)} onChange={() => tagChangeHandler(tag)} />
+              <input type={'checkbox'} name={'tags'} value={tag.title} checked={selectedTags.has(tag.id)} onChange={() => tagChangeHandler(tag)} />
               {tag.title}
             </label>
           </div>
