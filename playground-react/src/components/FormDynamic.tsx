@@ -7,6 +7,7 @@ import FormTextArea from "./FormTextArea";
 import styles from "./FormStatic.module.css";
 import useDebounce from "../hooks/useDebounce";
 import useValidationDynamic from "../hooks/useValidationDynamic";
+import Loading from "./Loading";
 
 
 const FormDynamic: FC = () => {
@@ -109,6 +110,8 @@ const FormDynamic: FC = () => {
         >
           {state.isLoading ? 'Submitting...' : 'Submit'}
         </button>
+
+        {state.isLoading && <Loading />}
 
         {state.success && <div className={styles.success} role={'alert'}>Form submitted successfully</div>}
         {state.error && <div className={styles.error} role={'status'}>{state.error}</div>}
