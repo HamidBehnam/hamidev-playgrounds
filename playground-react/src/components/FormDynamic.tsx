@@ -1,7 +1,7 @@
 import {ChangeEvent, FC, FormEvent, useCallback, useEffect, useReducer, useState} from "react";
 import dynamicFormReducer from "../reducers/FormReducerDynamic";
 import {formInitialState} from "../constants/FormConstantsDynamic";
-import {Field, ValidationMode} from "../types/FormTypesDynamic";
+import {Field} from "../types/FormTypesDynamic";
 import FormInput from "./FormInput";
 import FormTextArea from "./FormTextArea";
 import styles from "./FormStatic.module.css";
@@ -13,8 +13,9 @@ import Loading from "./Loading";
 const FormDynamic: FC = () => {
   const [state, dispatch] = useReducer(dynamicFormReducer, formInitialState);
   const [touched, setTouched] = useState(new Set<string>());
-  const formDebounceSignal = useDebounce<Field[]>(state.fields, 300);
-  const [errors, validateForm] = useValidationDynamic(state, touched);
+  const [errors, setErrors] = useState(new Map<string, string>());
+  const {validateField, validateFields} = useValidationDynamic();
+  const debouncedStateFields = useDebounce(state.fields, 300);
 
   useEffect(() => {
     const data: Field[] = [
@@ -27,9 +28,14 @@ const FormDynamic: FC = () => {
     dispatch({ type: 'SET_FIELDS', payload: data });
   }, []);
 
+  const runValidation = () => {
+    const errors = validateFields(state.fields.filter(field => touched.has(field.id)));
+    setErrors(errors);
+  }
+
   useEffect(() => {
-    validateForm(ValidationMode.TOUCHED);
-  }, [formDebounceSignal]);
+    runValidation();
+  }, [debouncedStateFields]);
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: Field) => {
     const { value } = event.target;
@@ -44,7 +50,11 @@ const FormDynamic: FC = () => {
   const handleSubmit = useCallback(async (event: FormEvent) => {
     event.preventDefault();
 
-    if (validateForm(ValidationMode.THOROUGH)) {
+    setTouched(new Set(state.fields.map(f => f.id)));
+    const errors = validateFields(state.fields);
+    setErrors(errors);
+
+    if (errors.size === 0) {
       dispatch({ type: 'SUBMIT_FORM' });
 
       try {
@@ -57,7 +67,7 @@ const FormDynamic: FC = () => {
         dispatch({ type: 'SUBMIT_FORM_ERROR', payload: 'An error occurred' });
       }
     }
-  }, [validateForm]);
+  }, [state.fields]);
 
   return (
     <>

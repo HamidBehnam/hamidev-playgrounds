@@ -1,49 +1,38 @@
-import {useCallback, useState} from "react";
-import {Field, FormState, ValidationMode} from "../types/FormTypesDynamic";
+import {Field} from "../types/FormTypesDynamic";
 
-const useValidationDynamic = (state: FormState, touched: Set<string>)
-  : [Map<string, string>, (validationMode: ValidationMode) => boolean] => {
-  const [errors, setErrors] = useState(new Map<string, string>());
+const useValidationDynamic = () => {
+  const validateField = (field: Field) => {
+    let error = '';
 
-  const validateForm = useCallback((validationMode: ValidationMode = ValidationMode.TOUCHED): boolean => {
-    let isValid = true;
-
-    let validationFields = [];
-
-    let newErrors = new Map<string, string>(errors);
-
-    switch (validationMode) {
-      case ValidationMode.TOUCHED:
-        validationFields = state.fields.filter(field => touched.has(field.id));
-        break;
-      case ValidationMode.STEP:
-        validationFields = state.fields.filter(field => field.step === state.currentStep);
-        break;
-      case ValidationMode.THOROUGH:
-        validationFields = state.fields;
-        break;
+    if (field.required && !field.value.trim()) {
+      error = `${field.label} is required`;
+    } else if (
+      field.input_type === 'email' && !/^\S+@\S+\.\S+$/.test(field.value)
+    ) {
+      error = `${field.label} is invalid`;
     }
 
-    validationFields.forEach(field => {
-      if (field.required && !field.value.trim()) {
-        isValid = false;
-        newErrors.set(field.id, `${field.label} is required`);
-      } else if (
-        field.input_type === 'email' && !/^\S+@\S+\.\S+$/.test(field.value)
-      ) {
-        isValid = false;
-        newErrors.set(field.id, `${field.label} is invalid`);
-      } else {
-        newErrors.delete(field.id);
+    return error;
+  };
+
+  const validateFields = (fields: Field[]) => {
+    const errors = new Map<string, string>();
+
+    fields.forEach(field => {
+      const error = validateField(field);
+
+      if (error) {
+        errors.set(field.id, error);
       }
     });
 
-    setErrors(newErrors);
+    return errors;
+  }
 
-    return isValid;
-  }, [state, touched]);
-
-  return [errors, validateForm];
+  return {
+    validateField,
+    validateFields
+  };
 };
 
 export default useValidationDynamic;

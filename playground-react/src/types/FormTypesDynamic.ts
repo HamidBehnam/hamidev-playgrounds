@@ -22,9 +22,3 @@ export type FormAction =
   | { type: 'SUBMIT_FORM'; }
   | { type: 'SUBMIT_FORM_SUCCESS'; }
   | { type: 'SUBMIT_FORM_ERROR'; payload: string; }
-
-export enum ValidationMode {
-  THOROUGH = 'THOROUGH',
-  STEP = 'STEP',
-  TOUCHED = 'TOUCHED'
-}
