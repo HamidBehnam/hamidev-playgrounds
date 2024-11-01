@@ -1,45 +1,34 @@
-import {useCallback, useState} from "react";
-import {FormData} from "../types/FormTypesStatic";
+const useValidationStatic = () => {
+  const validateField = (name: string, value: string) => {
+    let error = '';
 
-const useValidationStatic = (formData: FormData, touched: Set<string>)
-  : [Map<string, string>, (thoroughValidation?: boolean) => boolean] => {
-  const [errors, setErrors] = useState(new Map<string, string>());
-
-  const validateForm = useCallback((thoroughValidation = false): boolean => {
-    let isValid = true;
-
-    const newErrors = new Map<string, string>();
-
-    if (thoroughValidation || touched.has('name')) {
-      if (!formData.name.trim()) {
-        newErrors.set('name', 'Name is required');
-        isValid = false;
-      }
+    if (!value.trim()) {
+      error = 'Field is required';
+    } else if (name === 'email' && !/^\S+@\S+\.\S+$/.test(value)) {
+      error = 'Email is invalid';
     }
 
-    if (thoroughValidation || touched.has('email')) {
-      if (!formData.email.trim()) {
-        newErrors.set('email', 'Email is required');
-        isValid = false;
-      } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) { // update this based on the requirements to exclude the spacial characters
-        newErrors.set('email', 'Email is invalid');
-        isValid = false;
+    return error;
+  };
+
+  const validateFields = (fields: {name: string, value: string}[]) => {
+    const errors = new Map<string, string>();
+
+    fields.forEach(field => {
+      const error = validateField(field.name, field.value);
+
+      if (error) {
+        errors.set(field.name, error);
       }
-    }
+    });
 
-    if (thoroughValidation || touched.has('message')) {
-      if (!formData.message.trim()) {
-        newErrors.set('message', 'Message is required');
-        isValid = false;
-      }
-    }
+    return errors;
+  };
 
-    setErrors(newErrors);
-
-    return isValid;
-  }, [formData, touched]);
-
-  return [errors, validateForm];
+  return {
+    validateField,
+    validateFields,
+  };
 };
 
 export default useValidationStatic;

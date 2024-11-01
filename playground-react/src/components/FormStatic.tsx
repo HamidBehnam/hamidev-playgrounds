@@ -7,26 +7,32 @@ import useValidationStatic from "../hooks/useValidationStatic";
 import {formReducerStatic} from "../reducers/FormReducerStatic";
 import {initialState} from "../constants/FormConstantsStatic";
 import {FormData} from "../types/FormTypesStatic";
+import Loading from "./Loading";
 
 
 const FormStatic: FC = () => {
   const [state, dispatch] = useReducer(formReducerStatic, initialState);
   const [touched, setTouched] = useState(new Set<string>());
-  const formDataDebounceSignal = useDebounce<FormData>(state.formData, 1000);
+  const debouncedFormData = useDebounce<FormData>(state.formData, 1000);
   const uniqueId = useId();
-  const [errors, validateForm] = useValidationStatic(state.formData, touched);
+  const [errors, setErrors] = useState(new Map<string, string>());
+  const {validateField, validateFields} = useValidationStatic();
+
+  // creating this array is helpful for the validation process and for cases where you don't have an array of fields to loop through.
+  const fields = [
+    {name: 'name', value: state.formData.name},
+    {name: 'email', value: state.formData.email},
+    {name: 'message', value: state.formData.message},
+  ];
+
+  const runValidation = () => {
+    const newErrors = validateFields(fields.filter(field => touched.has(field.name)));
+    setErrors(newErrors);
+  }
 
   useEffect(() => {
-    validateForm();
-  }, [formDataDebounceSignal]);
-
-  const markAllFieldsAsTouched = useCallback(() => {
-    let newTouched = new Set<string>();
-    for (const key of Object.keys(state.formData)) {
-      newTouched.add(key);
-    }
-    setTouched(newTouched);
-  }, [state.formData]);
+    runValidation();
+  }, [debouncedFormData]);
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -41,9 +47,11 @@ const FormStatic: FC = () => {
   const handleSubmit = useCallback(async (event: FormEvent) => {
     event.preventDefault();
 
-    markAllFieldsAsTouched();
+    setTouched(new Set(fields.map(field => field.name)));
+    const errors = validateFields(fields);
+    setErrors(errors);
 
-    if (validateForm(true)) {
+    if (errors.size === 0) {
       dispatch({ type: 'SUBMIT_FORM' });
 
       try {
@@ -109,6 +117,8 @@ const FormStatic: FC = () => {
       >
         {state.isLoading ? 'Submitting...' : 'Submit'}
       </button>
+
+      {state.isLoading && <Loading />}
 
       {state.success && <div className={styles.success} role={'alert'}>Form submitted successfully</div>}
       {state.error && <div className={styles.error} role={'status'}>{state.error}</div>}
