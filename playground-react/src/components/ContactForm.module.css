@@ -1,0 +1,19 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+*:focus {
+  outline: 2px solid blue;
+  outline-offset: 3px;
+}

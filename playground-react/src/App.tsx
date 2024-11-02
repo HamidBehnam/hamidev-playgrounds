@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
+import ContactForm from "./components/ContactForm";
 
 function App() {
   return (
     <div className="App">
-      <div>React Playground</div>
+      <ContactForm />
     </div>
   );
 }
