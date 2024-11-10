@@ -1,0 +1,13 @@
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
+
+.validationMessage {
+  padding: 20px;
+  background-color: lightgrey;
+  border-radius: 8px;
+}
