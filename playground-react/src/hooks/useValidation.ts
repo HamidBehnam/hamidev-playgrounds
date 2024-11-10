@@ -19,6 +19,20 @@ const useValidation = () => {
   const radioSchema = z.string().refine(value => value !== '', {message: 'Select one'});
   const optionSchema = z.string().refine(value => value !== '', {message: 'Select one'});
 
+  const formDataSchema = z.object({
+    name: nameSchema,
+    email: emailSchema,
+    message: messageSchema,
+    age: ageSchema,
+    departure: departureSchema,
+    arrival: arrivalSchema,
+    password: passwordSchema,
+    accept: acceptSchema,
+    tags: tagsSchema,
+    radio: radioSchema,
+    option: optionSchema,
+  });
+
   const validateField = (name: string, value: string | number | boolean | string[]) => {
     let result;
 
@@ -85,6 +99,21 @@ const useValidation = () => {
       result.error.errors.forEach((error) => {
         errors.set(error.path.join('.'), error.message);
       });
+    }
+
+    return errors;
+  };
+
+  const validateFieldsAllAtOnce = (formData: FormData) => {
+    const errors = new Map<string, string>();
+
+    const result = formDataSchema.safeParse(formData);
+
+    if (!result.success) {
+
+      for (let error of result.error.errors) {
+        errors.set(error.path.join('.'), error.message);
+      }
     }
 
     return errors;
