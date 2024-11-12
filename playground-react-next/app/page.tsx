@@ -1,7 +1,9 @@
+import Todo from "@/app/_components/Todo/Todo";
+
 export default function Home() {
   return (
     <div>
-      <div>Next.js - React Playground</div>
+      <Todo />
     </div>
   );
 }
