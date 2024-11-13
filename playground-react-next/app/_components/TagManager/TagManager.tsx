@@ -31,22 +31,22 @@ const tagsData = [
 const TagManager = () => {
   const [tags, setTags] = useState<Tag[]>(tagsData);
 
-  const [selectedTags, setSelectedTags] = useState(new Set<number>());
+  const [selectedTags, setSelectedTags] = useState(new Map<number, Tag>());
 
   const toggleTag = (tag: Tag) => {
-    const selectedTagsClone = new Set(selectedTags);
+    const selectedTagsClone = new Map(selectedTags);
 
     if (selectedTagsClone.has(tag.id)) {
       selectedTagsClone.delete(tag.id);
     } else {
-      selectedTagsClone.add(tag.id);
+      selectedTagsClone.set(tag.id, tag);
     }
 
     setSelectedTags(selectedTagsClone);
   };
 
   const deleteSelection = (tag: Tag) => {
-    const selectedTagsClone = new Set(selectedTags);
+    const selectedTagsClone = new Map(selectedTags);
 
     selectedTagsClone.delete(tag.id);
 
@@ -62,9 +62,9 @@ const TagManager = () => {
   };
 
   return (
-    <div className={'max-w-md mx-auto bg-white shadow-lg rounded-lg p-5 mt-14'}>
+    <div className={'max-w-md mx-auto bg-white shadow-xl rounded-lg p-5 mt-14'}>
       <h1 className={'font-bold text-xl'}>Tag Manager App</h1>
-      <TagForm tags={tags} selectedTags={selectedTags} onDelete={deleteSelection} onFilter={filterTags}/>
+      <TagForm selectedTags={selectedTags} onDelete={deleteSelection} onFilter={filterTags}/>
       <TagList tags={tags} selectedTags={selectedTags} onToggle={toggleTag}/>
     </div>
   );

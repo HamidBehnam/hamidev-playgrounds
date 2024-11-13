@@ -2,13 +2,12 @@ import { FC, useEffect, useId, useState } from "react";
 import { Tag } from "../TagManager/TagManager";
 
 interface TagFormProps {
-  selectedTags: Set<number>,
-  tags: Tag[],
+  selectedTags: Map<number, Tag>,
   onDelete: (tag: Tag) => void,
   onFilter: (filter: string) => void,
 }
 
-const TagForm: FC<TagFormProps> = ({tags, selectedTags, onDelete, onFilter}) => {
+const TagForm: FC<TagFormProps> = ({selectedTags, onDelete, onFilter}) => {
   const uniqueId = useId();
   const [filterTag, setFilterTag] = useState('');
 
@@ -19,7 +18,7 @@ const TagForm: FC<TagFormProps> = ({tags, selectedTags, onDelete, onFilter}) => 
   return (
     <>
       <div className={'flex gap-x-2 mt-4'}>
-        {tags.filter(tag => selectedTags.has(tag.id)).map(tag => (
+        {Array.from(selectedTags).map(([tagId, tag]) => (
           <div key={tag.id} className={'flex gap-x-2 bg-gray-300 rounded-xl p-2'}>
             <div>{tag.title}</div>
             <button onClick={() => onDelete(tag)}>X</button>

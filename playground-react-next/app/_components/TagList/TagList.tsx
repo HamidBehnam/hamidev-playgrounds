@@ -3,7 +3,7 @@ import {Tag} from "@/app/_components/TagManager/TagManager";
 
 interface TagListProps {
   tags: Tag[];
-  selectedTags: Set<number>;
+  selectedTags: Map<number, Tag>;
   onToggle: (tag: Tag) => void;
 }
 
