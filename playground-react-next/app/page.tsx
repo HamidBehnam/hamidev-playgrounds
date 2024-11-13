@@ -1,7 +1,9 @@
+import TagManager from "@/app/_components/TagManager/TagManager";
+
 export default function Home() {
   return (
     <div>
-      <div>Next.js - React Playground</div>
+      <TagManager />
     </div>
   );
 }
