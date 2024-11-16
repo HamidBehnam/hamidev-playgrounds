@@ -5,17 +5,26 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Content from "./components/Content/Content";
 import Footer from "./components/Footer/Footer";
 import styles from './App.module.css';
+import {AppProvider} from "./providers/AppProvider";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+
+// singleton instance of QueryClient
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <div className={styles.appContainer}>
-      <Sidebar />
-      <div className={styles.mainContainer}>
-        <Header />
-        <Content />
-        <Footer />
-      </div>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <AppProvider>
+        <div className={styles.appContainer}>
+          <Sidebar />
+          <div className={styles.mainContainer}>
+            <Header />
+            <Content />
+            <Footer />
+          </div>
+        </div>
+      </AppProvider>
+    </QueryClientProvider>
   );
 }
 
