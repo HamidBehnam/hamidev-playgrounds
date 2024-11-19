@@ -1,3 +1,5 @@
+import {useCallback} from "react";
+
 export enum PasswordStrength {
   Weak = 'Weak',
   Medium = 'Medium',
@@ -5,7 +7,7 @@ export enum PasswordStrength {
 }
 
 const useStrengthDetector = () => {
-  return (password: string): PasswordStrength => {
+  return useCallback((password: string): PasswordStrength => {
     // checks: [length, one uppercase, one lowercase, one number, one special character]
     let checks = [false, false, false, false, false];
 
@@ -40,7 +42,7 @@ const useStrengthDetector = () => {
     } else {
       return PasswordStrength.Strong;
     }
-  };
+  }, []);
 };
 
 export default useStrengthDetector;
