@@ -7,10 +7,11 @@ const Header: FC = () => {
 
   return (
     <>
-      <div className={styles.header}>
+      <div className={`${styles.header} font-bold`}>
         {!sidebarOpen && (
           <button
             type={'button'}
+            className={'bg-gray-300 rounded-md p-1 font-bold'}
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >Toggle</button>
         )}

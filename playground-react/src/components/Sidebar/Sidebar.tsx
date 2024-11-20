@@ -12,6 +12,7 @@ const Sidebar: FC = () => {
   return (
     <div className={styles.sidebar}>
       <button
+        className={'bg-white rounded-md p-1 font-bold'}
         type={'button'}
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >Toggle</button>
