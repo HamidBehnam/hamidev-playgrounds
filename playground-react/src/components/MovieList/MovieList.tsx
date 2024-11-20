@@ -1,7 +1,6 @@
 import {FC} from "react";
 import {Movie} from "../../types";
 import MovieListItem from "../MovieListItem/MovieListItem";
-import styles from './MovieList.module.css';
 
 interface MovieListProp {
   movies: Movie[];
@@ -9,7 +8,7 @@ interface MovieListProp {
 
 const MovieList: FC<MovieListProp> = ({movies}) => {
   return (
-    <ul className={styles.movieList}>
+    <ul className={`grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-3 px-4`}>
       {movies?.map(movie => (
         <li key={movie.id}>
           <MovieListItem movie={movie} />

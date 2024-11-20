@@ -1,9 +1,8 @@
 import {FC} from "react";
-import styles from './Footer.module.css';
 
 const Footer: FC = () => {
   return (
-    <div className={styles.footer}>Footer</div>
+    <div className={'p-4 font-bold'}>Copyright 2024</div>
   );
 };
 
