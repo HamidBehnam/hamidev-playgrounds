@@ -5,6 +5,8 @@ interface AppContextType {
   currentlyWatching: string;
   setTheme: (theme: string) => void;
   setCurrentlyWatching: (currentlyWatching: string) => void;
+  sidebarOpen: boolean;
+  setSidebarOpen: (sidebarOpen: boolean) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -16,9 +18,10 @@ interface AppProviderProps {
 export const AppProvider: FC<AppProviderProps> = ({children}) => {
   const [theme, setTheme] = useState("light");
   const [currentlyWatching, setCurrentlyWatching] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
-    <AppContext.Provider value={{theme, setTheme, currentlyWatching, setCurrentlyWatching}}>
+    <AppContext.Provider value={{theme, setTheme, currentlyWatching, setCurrentlyWatching, sidebarOpen, setSidebarOpen}}>
       {children}
     </AppContext.Provider>
   );
