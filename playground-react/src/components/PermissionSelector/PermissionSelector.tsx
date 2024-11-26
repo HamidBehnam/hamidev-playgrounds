@@ -44,7 +44,7 @@ const PermissionSelector: FC<PermissionSelectorProps> = ({options}) => {
   };
 
   return (
-    <form>
+    <form className={'flex gap-2'}>
       <div>
         <label>
           <input

@@ -10,13 +10,13 @@ const UserAvatar: FC<UserAvatarProps> = ({permission}) => {
 
   switch (permission) {
     case Permission.Manage:
-      icon = <div>ManageIcon</div>
+      icon = <div>👦</div>
       break;
     case Permission.View:
-      icon = <div>ViewIcon</div>
+      icon = <div>👁️</div>
       break;
     case Permission.Suspended:
-      icon = <div>SuspendedIcon</div>
+      icon = <div>🚫</div>
       break;
     default:
       return null;

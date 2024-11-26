@@ -37,13 +37,23 @@ export const FilterBar = () => {
   }, []);
 
   return (
-    <div>
+    <div className={'flex justify-between items-center pb-10'}>
       <input
         placeholder="Find users..."
         value={state.filterData.term}
         onChange={handleSearchTermChange}
+        className={'p-2 border border-gray-300 rounded-md w-1/3'}
       />
-      <PermissionSelector options={permissionOptions} />
+      <div className={'flex items-center gap-2'}>
+        <button
+          onClick={() => dispatch({ type: "CLEAR_ALL_FILTERS" })}
+          disabled={!filtersAreApplied}
+          className={`p-2 rounded-md ${filtersAreApplied ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-500'}`}
+        >
+          Clear filters
+        </button>
+        <PermissionSelector options={permissionOptions} />
+      </div>
     </div>
   );
 };

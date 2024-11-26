@@ -43,7 +43,7 @@ const UsersList = () => {
   if (error) return <ErrorMessage message={"Error fetching the users list"} />;
 
   return (
-    <ul>
+    <ul className={'grid gap-2 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]'}>
       {currentUsers.map((user: any, index) => (
         <UsersListItem user={user}/>
       ))}

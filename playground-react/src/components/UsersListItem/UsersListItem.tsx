@@ -7,10 +7,15 @@ interface UsersListItemProps {
 
 const UsersListItem: FC<UsersListItemProps> = ({user}) => {
   return (
-    <li>
+    <li className={'rounded p-10 flex items-center gap-1 shadow-md justify-between overflow-scroll hover:bg-gray-300 transition-all cursor-pointer'}>
       <UserAvatar permission={user.permission} />
-      <div>{user.name}</div>
-      <div>{user.email}</div>
+      <section>
+        <div>{user.name}</div>
+        <div>{user.email}</div>
+        <div>{user.company}</div>
+        <div>{user.address}</div>
+        <div>{user.phone}</div>
+      </section>
     </li>
   );
 };
