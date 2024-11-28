@@ -1,27 +1,37 @@
-import {useAppContext} from "../../providers/AppProvider";
 import {FC, useEffect, useState} from "react";
-import {AppAction, PermissionOption} from "../../types";
+import useAppStore from "../../hooks/useAppStore";
+import {PermissionOption} from "../../types";
 
 interface PermissionSelectorProps {
   options: PermissionOption[];
 }
 
 const PermissionSelector: FC<PermissionSelectorProps> = ({options}) => {
-  const {state, dispatch} = useAppContext();
+  const {
+    filterData: {
+      inclusionType,
+      includedPermissions,
+      excludedPermissions
+    },
+    setInclusion,
+    setIncludedPermissions,
+    setExcludedPermissions,
+    setUserIntervened
+  } = useAppStore(state => state);
+
   const [selectedPermissions, setSelectedPermissions] = useState(new Set<string>([]));
 
   useEffect(() => {
     setSelectedPermissions(
-      state.filterData.inclusionType === 'INCLUDE' ?
-        new Set(state.filterData.includedPermissions) :
-        new Set(state.filterData.excludedPermissions)
+      inclusionType === 'INCLUDE' ?
+        new Set(includedPermissions) :
+        new Set(excludedPermissions)
     );
-  }, [state.filterData.inclusionType, state.filterData.includedPermissions, state.filterData.excludedPermissions]);
+  }, [inclusionType, includedPermissions, excludedPermissions]);
 
-  const handleInclusionTypeChange = (action: AppAction) => {
-    console.log(action);
-    dispatch(action);
-    dispatch({type: 'SET_USER_INTERVENED', payload: true});
+  const handleInclusionTypeChange = (type: 'INCLUDE' | 'EXCLUDE') => {
+    setInclusion(type);
+    setUserIntervened(true);
   };
 
   const handlePermissionChange = (option: PermissionOption) => {
@@ -34,13 +44,13 @@ const PermissionSelector: FC<PermissionSelectorProps> = ({options}) => {
 
     setSelectedPermissions(selectedPermissionsCloned);
 
-    if (state.filterData.inclusionType === 'INCLUDE') {
-      dispatch({type: 'SET_INCLUDED_PERMISSIONS', payload: Array.from(selectedPermissionsCloned)});
+    if (inclusionType === 'INCLUDE') {
+      setIncludedPermissions(Array.from(selectedPermissionsCloned));
     } else {
-      dispatch({type: 'SET_EXCLUDED_PERMISSIONS', payload: Array.from(selectedPermissionsCloned)});
+      setExcludedPermissions(Array.from(selectedPermissionsCloned));
     }
 
-    dispatch({ type: "SET_USER_INTERVENED", payload: true});
+    setUserIntervened(true);
   };
 
   return (
@@ -50,8 +60,8 @@ const PermissionSelector: FC<PermissionSelectorProps> = ({options}) => {
           <input
             type={'radio'}
             value={'INCLUDE'}
-            checked={state.filterData.inclusionType === 'INCLUDE'}
-            onChange={() => handleInclusionTypeChange({type: 'SET_INCLUSION', payload: 'INCLUDE'})}
+            checked={inclusionType === 'INCLUDE'}
+            onChange={() => handleInclusionTypeChange('INCLUDE')}
           />
           Include
         </label>
@@ -61,8 +71,8 @@ const PermissionSelector: FC<PermissionSelectorProps> = ({options}) => {
           <input
             type={'radio'}
             value={'EXCLUDE'}
-            checked={state.filterData.inclusionType === 'EXCLUDE'}
-            onChange={() => handleInclusionTypeChange({type: 'SET_INCLUSION', payload: 'EXCLUDE'})}
+            checked={inclusionType === 'EXCLUDE'}
+            onChange={() => handleInclusionTypeChange('EXCLUDE')}
           />
           Exclude
         </label>

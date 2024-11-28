@@ -6,12 +6,35 @@ import React, {
     FC,
     ReactNode,
 } from "react";
-import { AppAction, AppState, Permission } from "../types";
+import {FilterData} from "../types";
+
+interface AppState {
+  filterData: FilterData;
+  userIntervened: boolean;
+}
+
+type AppAction =
+  | { type: "SET_TERM"; payload: string }
+  | { type: "SET_INCLUSION"; payload: 'INCLUDE' | 'EXCLUDE' }
+  | { type: "SET_INCLUDED_PERMISSIONS"; payload: string[] }
+  | { type: "SET_EXCLUDED_PERMISSIONS"; payload: string[] }
+  | { type: "SET_USER_INTERVENED"; payload: boolean }
+  | { type: "CLEAR_ALL_FILTERS"; }
 
 interface AppContextType {
     state: AppState;
     dispatch: Dispatch<AppAction>;
 }
+
+const initialState: AppState = {
+  filterData: {
+    term: "",
+    inclusionType: "INCLUDE",
+    includedPermissions: ['manage', 'view', 'suspended'],
+    excludedPermissions: []
+  },
+  userIntervened: false
+};
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
@@ -65,21 +88,11 @@ const appReducer = (state: AppState, action: AppAction) => {
     }
 };
 
-const initialState: AppState = {
-    filterData: {
-        term: "",
-        inclusionType: "INCLUDE",
-        includedPermissions: ['manage', 'view', 'suspended'],
-        excludedPermissions: []
-    },
-    userIntervened: false
-};
-
 interface AppProviderProps {
     children: ReactNode;
 }
 
-export const AppProvider: FC<AppProviderProps> = ({ children }) => {
+export const AppProvider_DEPRECATED: FC<AppProviderProps> = ({ children }) => {
     const [state, dispatch] = useReducer(appReducer, initialState);
 
     return (
@@ -93,7 +106,7 @@ export const useAppContext = () => {
     const appContext = useContext(AppContext);
 
     if (!appContext) {
-        throw new Error("AppContext must be accessed within an AppProvider");
+        throw new Error("AppContext must be accessed within an AppProvider_DEPRECATED");
     }
 
     return appContext;

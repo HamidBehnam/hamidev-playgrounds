@@ -16,15 +16,21 @@ export interface FilterData {
   excludedPermissions: string[];
 }
 
-export interface AppState {
+export interface FilterStateProps {
   filterData: FilterData;
   userIntervened: boolean;
 }
 
-export type AppAction =
-  | { type: "SET_TERM"; payload: string }
-  | { type: "SET_INCLUSION"; payload: 'INCLUDE' | 'EXCLUDE' }
-  | { type: "SET_INCLUDED_PERMISSIONS"; payload: string[] }
-  | { type: "SET_EXCLUDED_PERMISSIONS"; payload: string[] }
-  | { type: "SET_USER_INTERVENED"; payload: boolean }
-  | { type: "CLEAR_ALL_FILTERS"; }
+export interface FilterStateActions {
+  setTerm: (term: string) => void;
+  setInclusion: (inclusionType: 'INCLUDE' | 'EXCLUDE') => void;
+  setIncludedPermissions: (permissions: string[]) => void;
+  setExcludedPermissions: (permissions: string[]) => void;
+  setUserIntervened: (userIntervened: boolean) => void;
+  clearAllFilters: () => void;
+}
+
+export type FilterState = FilterStateProps & FilterStateActions;
+
+// AppState is the combination of all the states in the app
+export type AppState = FilterState;

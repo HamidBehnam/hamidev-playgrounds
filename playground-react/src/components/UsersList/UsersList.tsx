@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import useUsersApi from "../../hooks/useUsersApi";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
-import { useAppContext } from "../../providers/AppProvider";
+import useAppStore from "../../hooks/useAppStore";
 import useDebounce from "../../hooks/useDebounce";
 import useSearch from "../../hooks/useSearch";
 import UsersListItem from "../UsersListItem/UsersListItem";
@@ -17,7 +17,8 @@ const UsersList = () => {
     isLoading,
   } = useQuery({ queryKey: ["users"], queryFn: getUsers });
   const [currentUsers, setCurrentUsers] = useState([]);
-  const {state: {filterData: {term, inclusionType, includedPermissions, excludedPermissions}, userIntervened}} = useAppContext();
+  const {term, includedPermissions, excludedPermissions, inclusionType} = useAppStore(state => state.filterData);
+  const userIntervened = useAppStore(state => state.userIntervened);
   const debouncedTerm = useDebounce(term, userIntervened ? 500 : 0);
   const {searchByText, searchByPermissionInclusion, searchByPermissionExclusion} = useSearch();
 
