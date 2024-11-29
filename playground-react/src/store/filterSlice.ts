@@ -18,7 +18,7 @@ const createFilterSlice: StateCreator<FilterState> = (set) => ({
   setIncludedPermissions: (permissions) => set(state => ({filterData: {...state.filterData, includedPermissions: permissions}})),
   setExcludedPermissions: (permissions) => set(state => ({filterData: {...state.filterData, excludedPermissions: permissions}})),
   setUserIntervened: (userIntervened) => set({userIntervened}),
-  clearAllFilters: () => set(initialStateProps),
+  clearAllFilters: () => set({...initialStateProps, userIntervened: true}),
 });
 
 export default createFilterSlice;
