@@ -32,5 +32,22 @@ export interface FilterStateActions {
 
 export type FilterState = FilterStateProps & FilterStateActions;
 
+export interface UIMeta {
+  version: string;
+}
+
+export interface UIStateProps {
+  theme: 'light' | 'dark';
+  uiMeta: UIMeta
+}
+
+export interface UIStateActions {
+  setTheme: (theme: 'light' | 'dark') => void;
+  setVersion: (version: string) => void;
+}
+
+export type UIState = UIStateProps & UIStateActions;
+
+
 // AppState is the combination of all the states in the app
-export type AppState = FilterState;
+export type AppState = FilterState & UIState;

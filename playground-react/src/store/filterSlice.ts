@@ -1,7 +1,7 @@
 import { StateCreator } from "zustand";
 import {FilterState, FilterStateProps} from "../types";
 
-const initialState: FilterStateProps = {
+const initialStateProps: FilterStateProps = {
   filterData: {
     term: "",
     inclusionType: "INCLUDE",
@@ -12,13 +12,13 @@ const initialState: FilterStateProps = {
 };
 
 const createFilterSlice: StateCreator<FilterState> = (set) => ({
-  ...initialState,
+  ...initialStateProps,
   setTerm: (term) => set(state => ({filterData: {...state.filterData, term}})),
   setInclusion: (inclusionType) => set(state => ({filterData: {...state.filterData, inclusionType}})),
   setIncludedPermissions: (permissions) => set(state => ({filterData: {...state.filterData, includedPermissions: permissions}})),
   setExcludedPermissions: (permissions) => set(state => ({filterData: {...state.filterData, excludedPermissions: permissions}})),
   setUserIntervened: (userIntervened) => set({userIntervened}),
-  clearAllFilters: () => set(initialState),
+  clearAllFilters: () => set(initialStateProps),
 });
 
 export default createFilterSlice;
