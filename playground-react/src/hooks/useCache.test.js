@@ -102,4 +102,54 @@ describe("useCache", () => {
     expect(value2).toBeUndefined();
     expect(value3).toBe('value for 3');
   });
+
+  it("should return undefined if the cache item is expired", async () => {
+    const { result } = renderHook(() => useCache(2, 1000));
+
+    act(() => {
+      result.current.put(1, 'value for 1');
+      result.current.put(2, 'value for 2');
+    });
+
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    const value1 = result.current.get(1);
+    const value2 = result.current.get(2);
+
+    expect(value1).toBeUndefined();
+    expect(value2).toBeUndefined();
+  });
+
+  it("should delete the cache item if the cache item is expired", async () => {
+    const { result } = renderHook(() => useCache(2, 1000));
+
+    act(() => {
+      result.current.put(1, 'value for 1');
+      result.current.put(2, 'value for 2');
+    });
+
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    result.current.get(1);
+    result.current.get(2);
+    const currentSize = result.current.size;
+
+    expect(currentSize).toBe(0);
+  });
+
+  it("should have a 'clean' function that remvoes all the expired items in the cache", async () => {
+    const { result } = renderHook(() => useCache(2, 1000));
+
+    act(() => {
+      result.current.put(1, 'value for 1');
+      result.current.put(2, 'value for 2');
+    });
+
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    result.current.clean();
+    const currentSize = result.current.size;
+
+    expect(currentSize).toBe(0);
+  });
 });

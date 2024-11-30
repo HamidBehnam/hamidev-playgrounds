@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react";
 import useSearch from "./useSearch";
 
 describe("searchByText", () => {
-  it("should filter an array of strings correctly", () => {
+  it("should filter an array of strings correctly", async () => {
     const { result } = renderHook(() => useSearch());
     const data = [
       "first",
@@ -10,12 +10,12 @@ describe("searchByText", () => {
       "third"
     ];
 
-    const filtered = result.current.searchByText(data, "eco");
+    const filtered = await result.current.searchByText(data, "eco");
 
     expect(filtered).toEqual(["second"]);
   });
 
-  it("should filter an array of objects correctly", () => {
+  it("should filter an array of objects correctly", async () => {
     const { result } = renderHook(() => useSearch());
     const data = [
       {
@@ -29,7 +29,7 @@ describe("searchByText", () => {
       }
     ];
 
-    const filtered = result.current.searchByText(data, "ird");
+    const filtered = await result.current.searchByText(data, "ird");
 
     expect(filtered).toEqual([
       {
@@ -38,7 +38,7 @@ describe("searchByText", () => {
     ]);
   });
 
-  it("should filter an array of objects with nested objects correctly", () => {
+  it("should filter an array of objects with nested objects correctly", async () => {
     const { result } = renderHook(() => useSearch());
     const data = [
       {
@@ -64,12 +64,12 @@ describe("searchByText", () => {
       }
     ];
 
-    const filtered = result.current.searchByText(data, "hamid1");
+    const filtered = await result.current.searchByText(data, "hamid1");
 
     expect(filtered).toEqual([{name: "first", code: {"code_id": "1", "code_title": "hamid1"}}]);
   });
 
-  it("should filter an array of objects with nested arrays correctly", () => {
+  it("should filter an array of objects with nested arrays correctly", async () => {
     const { result } = renderHook(() => useSearch());
     const data = [
       {
@@ -110,7 +110,7 @@ describe("searchByText", () => {
       }
     ];
 
-    const filtered = result.current.searchByText(data, "p4");
+    const filtered = await result.current.searchByText(data, "p4");
 
     expect(filtered).toEqual([{name: "second", code: {"code_id": "2", "code_title": "hamid2"}, products: ['p2', 'p3', 'p4']}, {name: "third", code: {"code_id": "3", "code_title": "hamid3"}, products: ['p4', 'p5', 'p6']}]);
   });

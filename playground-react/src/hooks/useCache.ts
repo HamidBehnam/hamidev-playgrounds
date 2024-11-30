@@ -1,20 +1,32 @@
 import {useRef} from "react";
+import {defaultCacheExpiration} from "../constants";
+
+interface TimedValue<V> {
+  value: V;
+  lastAccess: number;
+}
 
 class LRUCache<K, V> {
-  private cache: Map<K, V>;
+  private cache: Map<K, TimedValue<V>>;
   private capacity: number;
+  private expiration: number;
 
-  constructor(capacity: number) {
-    this.cache = new Map<K, V>();
+  constructor(capacity: number, expiration: number) {
+    this.cache = new Map<K, TimedValue<V>>();
     this.capacity = capacity;
+    this.expiration = expiration;
   }
 
   get(key: K): V | undefined {
     if (this.cache.has(key)) {
-      const value = this.cache.get(key);
-      this.cache.delete(key);
-      this.cache.set(key, value!);
-      return value;
+      if (Date.now() - this.cache.get(key)!.lastAccess < this.expiration) {
+        const timedValue = this.cache.get(key);
+        this.cache.delete(key);
+        this.cache.set(key, timedValue!);
+        return timedValue!.value;
+      } else {
+        this.cache.delete(key);
+      }
     }
 
     return undefined;
@@ -29,15 +41,37 @@ class LRUCache<K, V> {
       this.cache.delete(this.cache.keys().next().value);
     }
 
-    this.cache.set(key, value);
+    this.cache.set(key, {
+      value,
+      lastAccess: Date.now()
+    });
+  }
+
+  clear(): void {
+    this.cache.clear();
+  }
+
+  clean() {
+    const notExpiredItems =
+      Array.from(this.cache)
+        .filter(
+          ([key, timedValue]) =>
+            Date.now() - timedValue.lastAccess < this.expiration
+        );
+
+    this.cache = new Map(notExpiredItems);
+  }
+
+  get size(): number {
+    return this.cache.size;
   }
 }
 
-const useCache = <K, V>(capacity: number = 3) => {
+const useCache = <K, V>(capacity: number = 3, expiration: number = defaultCacheExpiration) => {
   const cache = useRef<LRUCache<K, V> | null>(null);
 
   if (!cache.current) {
-    cache.current = new LRUCache<K, V>(capacity);
+    cache.current = new LRUCache<K, V>(capacity, expiration);
   }
 
   return cache.current;

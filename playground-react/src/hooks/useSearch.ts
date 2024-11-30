@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 
 const useSearch = () => {
+  // returning a promise to offload the process outside the callstack
   const searchByText = useCallback(<T,>(array: T[], term: string) => {
     const termLowerCase = term.toLowerCase();
 
@@ -15,29 +16,32 @@ const useSearch = () => {
         default:
           return `${item}`.toString().toLowerCase().includes(termLowerCase);
       }
-
-      function handleObjects(obj: unknown) {
-        for (let value of Object.values(obj as {})) {
-          if (dfs(value)) {
-            return true;
-          }
-        }
-
-        return false;
-      }
-
-      function handleArrays(arr: unknown) {
-        for (let item of arr as []) {
-          if (dfs(item)) {
-            return true;
-          }
-        }
-
-        return false;
-      }
     }
 
-    return array.filter(item => dfs(item));
+    function handleObjects(obj: unknown) {
+      for (let value of Object.values(obj as {})) {
+        if (dfs(value)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    function handleArrays(arr: unknown) {
+      for (let item of arr as []) {
+        if (dfs(item)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    return new Promise<T[]>((resolve, reject) => {
+      const result = array.filter(item => dfs(item));
+      resolve(result);
+    });
   }, []);
 
   const searchByPermissionInclusion = useCallback(<T extends { permission: string },>(array: T[], permissions: string[]) => {

@@ -8,6 +8,7 @@ import useDebounce from "../../hooks/useDebounce";
 import useSearch from "../../hooks/useSearch";
 import UsersListItem from "../UsersListItem/UsersListItem";
 import useCache from "../../hooks/useCache";
+import EmptyList from "../EmptyList/EmptyList";
 
 
 const UsersList = () => {
@@ -33,32 +34,41 @@ const UsersList = () => {
   const {searchByText, searchByPermissionInclusion, searchByPermissionExclusion} = useSearch();
 
   useEffect(() => {
-    if (users) {
-      let searchResult = users;
+    // converted to async to avoid occupying the callstack while performing the search.
+    const handleSearch = async () => {
+      if (users) {
+        let searchResult = users;
 
-      let cacheKey = getCacheKey(debouncedTerm, inclusionType, includedPermissions, excludedPermissions);
+        let cacheKey = getCacheKey(debouncedTerm, inclusionType, includedPermissions, excludedPermissions);
 
-      let cachedResult = lruCache.get(cacheKey);
+        let cachedResult = lruCache.get(cacheKey);
 
-      if (cachedResult) {
-        searchResult = cachedResult;
-      } else {
-        if (debouncedTerm.trim()) {
-          searchResult = searchByText(searchResult, debouncedTerm);
+        if (cachedResult) {
+          searchResult = cachedResult;
+        } else {
+          if (debouncedTerm.trim()) {
+            searchResult = await searchByText(searchResult, debouncedTerm);
+          }
+
+          if (inclusionType === 'INCLUDE') {
+            searchResult = searchByPermissionInclusion(searchResult, includedPermissions);
+          } else if (inclusionType === 'EXCLUDE') {
+            searchResult = searchByPermissionExclusion(searchResult, excludedPermissions);
+          }
+
+          lruCache.put(cacheKey, searchResult);
         }
 
-        if (inclusionType === 'INCLUDE') {
-          searchResult = searchByPermissionInclusion(searchResult, includedPermissions);
-        } else if (inclusionType === 'EXCLUDE') {
-          searchResult = searchByPermissionExclusion(searchResult, excludedPermissions);
-        }
-
-        lruCache.put(cacheKey, searchResult);
+        setCurrentUsers(searchResult);
       }
+    };
 
-      setCurrentUsers(searchResult);
-    }
+    handleSearch();
   }, [users, debouncedTerm, inclusionType, includedPermissions, excludedPermissions]);
+
+  useEffect(() => {
+    return () => lruCache.clear();
+  }, []);
 
   const getCacheKey = useCallback((
       term: string,
@@ -72,6 +82,7 @@ const UsersList = () => {
 
   if (isLoading) return <LoadingIndicator />;
   if (error) return <ErrorMessage message={"Error fetching the users list"} />;
+  if (currentUsers.length === 0) return <EmptyList />;
 
   return (
     <ul className={'grid gap-2 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]'}>

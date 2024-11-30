@@ -60,7 +60,7 @@ export const FilterBar = () => {
           disabled={!filtersAreApplied}
           className={`p-2 rounded-md ${filtersAreApplied ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-500'}`}
         >
-          Clear filters
+          Reset filters
         </button>
         <PermissionSelector options={permissionOptions} />
       </div>
