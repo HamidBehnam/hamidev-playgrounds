@@ -12,7 +12,7 @@ import EmptyList from "../EmptyList/EmptyList";
 
 
 const UsersList = () => {
-  const lruCache = useCache(5);
+  const lruCache = useCache({capacity: 5});
   const { getUsers } = useUsersApi();
   const {
     data: users,

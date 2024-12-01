@@ -8,4 +8,6 @@ export const permissionOptions: PermissionOption[] = [
 
 export const localStorageItem = 'LM_Assignment_FilterData';
 
+export const defaultCacheCapacity = 3;
+
 export const defaultCacheExpiration = 10 * 60 * 1000; // 10 minutes

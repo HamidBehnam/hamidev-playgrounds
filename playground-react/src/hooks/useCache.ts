@@ -1,5 +1,6 @@
 import {useRef} from "react";
-import {defaultCacheExpiration} from "../constants";
+import {defaultCacheCapacity, defaultCacheExpiration} from "../constants";
+import {CacheConfig} from "../types";
 
 interface TimedValue<V> {
   value: V;
@@ -67,7 +68,12 @@ class LRUCache<K, V> {
   }
 }
 
-const useCache = <K, V>(capacity: number = 3, expiration: number = defaultCacheExpiration) => {
+const useCache = <K, V>(cacheConfig: CacheConfig = {}) => {
+  const {
+    capacity = defaultCacheCapacity,
+    expiration = defaultCacheExpiration
+  } = cacheConfig;
+
   const cache = useRef<LRUCache<K, V> | null>(null);
 
   if (!cache.current) {

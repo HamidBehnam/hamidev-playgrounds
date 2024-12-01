@@ -9,6 +9,11 @@ export enum Permission {
   Suspended = 'suspended'
 }
 
+export interface CacheConfig {
+  capacity?: number;
+  expiration?: number;
+}
+
 export interface FilterData {
   term: string;
   inclusionType: 'INCLUDE' | 'EXCLUDE';
