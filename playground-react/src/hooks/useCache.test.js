@@ -9,10 +9,13 @@ describe("useCache", () => {
     expect(result.current).toBeDefined();
     expect(result.current).toHaveProperty('get');
     expect(result.current).toHaveProperty('put');
+    expect(result.current).toHaveProperty('clear');
+    expect(result.current).toHaveProperty('clean');
+    expect(result.current).toHaveProperty('size');
   });
 
   it("should return undefined if the key does not exist", () => {
-    const { result } = renderHook(() => useCache(3));
+    const { result } = renderHook(() => useCache({capacity: 3}));
 
     const value = result.current.get(1);
 
@@ -21,7 +24,7 @@ describe("useCache", () => {
 
 
   it("should store and retrieve the value correctly", () => {
-    const { result } = renderHook(() => useCache(3));
+    const { result } = renderHook(() => useCache({capacity: 3}));
 
     act(() => {
       result.current.put(1, 'value for 1');
@@ -33,7 +36,7 @@ describe("useCache", () => {
   });
 
   it("should update the value for an existing key", () => {
-    const { result } = renderHook(() => useCache(3));
+    const { result } = renderHook(() => useCache({capacity: 3}));
 
     act(() => {
       result.current.put(1, 'value for 1');
@@ -46,7 +49,7 @@ describe("useCache", () => {
   });
 
   it("should remove the least used item when exceeding the capacity", () => {
-    const { result } = renderHook(() => useCache(2));
+    const { result } = renderHook(() => useCache({capacity: 2}));
 
     act(() => {
       result.current.put(1, 'value for 1');
@@ -64,7 +67,7 @@ describe("useCache", () => {
   });
 
   it("should make the recently accessed item the most recently used", () => {
-    const { result } = renderHook(() => useCache(2));
+    const { result } = renderHook(() => useCache({capacity: 2}));
 
     act(() => {
       result.current.put(1, 'value for 1');
@@ -83,7 +86,7 @@ describe("useCache", () => {
   });
 
   it("should maintain cache across re-renders", () => {
-    const { result, rerender } = renderHook(() => useCache(2));
+    const { result, rerender } = renderHook(() => useCache({capacity: 2}));
 
     act(() => {
       result.current.put(1, 'value for 1');
@@ -104,7 +107,7 @@ describe("useCache", () => {
   });
 
   it("should return undefined if the cache item is expired", async () => {
-    const { result } = renderHook(() => useCache(2, 1000));
+    const { result } = renderHook(() => useCache({capacity: 2, expiration: 1000}));
 
     act(() => {
       result.current.put(1, 'value for 1');
@@ -121,7 +124,7 @@ describe("useCache", () => {
   });
 
   it("should delete the cache item if the cache item is expired", async () => {
-    const { result } = renderHook(() => useCache(2, 1000));
+    const { result } = renderHook(() => useCache({capacity: 2, expiration: 1000}));
 
     act(() => {
       result.current.put(1, 'value for 1');
@@ -138,7 +141,7 @@ describe("useCache", () => {
   });
 
   it("should have a 'clean' function that remvoes all the expired items in the cache", async () => {
-    const { result } = renderHook(() => useCache(2, 1000));
+    const { result } = renderHook(() => useCache({capacity: 2, expiration: 1000}));
 
     act(() => {
       result.current.put(1, 'value for 1');
