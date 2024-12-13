@@ -1,12 +1,19 @@
-import React from 'react';
-import './App.css';
+import { Box } from "@mui/material";
+import { FilterBar } from "./components/FilterBar/FilterBar";
+import UsersList from "./components/UsersList/UsersList";
+import "./styles.css";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <div>React Playground</div>
-    </div>
+    <Box
+      className="App"
+      textAlign="initial"
+      display="flex"
+      flexDirection="column"
+      gap={1}
+    >
+      <FilterBar />
+      <UsersList />
+    </Box>
   );
 }
-
-export default App;
