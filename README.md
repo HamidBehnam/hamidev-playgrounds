@@ -3,7 +3,23 @@
 - `main` branch is the root branch of the project which is intentionally empty. All the playground branches should be created from the `main` branch.
 - `playground` branches are the branches that their purpose is to provide the clean code.
 
-## Creating New Playground Template 
+## Creating New Playground Branch
+- Checkout the `main` branch.
+- Make sure `git status` is clean.
+  - React Playground: 
+    - `git checkout -b react/some-subject`
+    - `npm create vite@latest` answer the questions and create the project. For consistency choose `playground-react` as the project name.
+    - `cd playground-react`
+    - `npm install`
+    - `npm run dev`
+    - Apply the necessary changes to the project.
+    - `git add .`
+    - Make sure the `.gitignore` file is filtering out the unnecessary files and folders properly.
+    - `git commit -m "Initial commit"`
+    - `git push -u origin react/some-subject`
+
+
+## Creating New Playground Template Branch
 ### Note: This is for cases that you want to remove a lot of default templates and have a clean codebase. In most cases the deletion is so minimal, you can just create the branch off of the main branch and run the proper command to create the new project and apply those minimal deletions before you commit the code. The advantage is that you won't get stuck with an outdated codebase.
 
 - Checkout the `main` branch.
