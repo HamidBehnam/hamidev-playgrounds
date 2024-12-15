@@ -3,7 +3,8 @@
 - `main` branch is the root branch of the project which is intentionally empty. All the playground branches should be created from the `main` branch.
 - `playground` branches are the branches that their purpose is to provide the clean code.
 
-## Creating New Playground Instructions
+## Creating New Playground Template 
+### Note: This is for cases that you want to remove a lot of default templates and have a clean codebase. In most cases the deletion is so minimal, you can just create the branch off of the main branch and run the proper command to create the new project and apply those minimal deletions before you commit the code. The advantage is that you won't get stuck with an outdated codebase.
 
 - Checkout the `main` branch.
 - Make sure `git status` is clean.
