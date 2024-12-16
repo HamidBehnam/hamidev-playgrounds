@@ -10,7 +10,7 @@
 **Vite Playground - React, Vue, Vanilla JS, Svelte, etc. Assuming the playground is for React:**
   - `git checkout -b react/some-subject`
   - `npm create vite@latest` - https://vite.dev/guide/ - Answer the questions and create the project. For consistency choose `react-playground` as the project name.
-  - `cd playground-react`
+  - `cd react-playground`
   - `npm install`
   - `npm run dev`
   - Apply the necessary changes to the project.
@@ -23,7 +23,7 @@
 **Next.js Playground:**
   - `git checkout -b next/some-subject`
   - `npx create-next-app@latest` - https://nextjs.org/docs - Answer the questions and create the project. For consistency choose `next-playground` as the project name.
-  - `cd playground-next`
+  - `cd next-playground`
   - Dependencies will be installed automatically during the project creation.
   - `npm run dev`
   - Apply the necessary changes to the project.
