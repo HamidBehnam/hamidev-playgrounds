@@ -8,7 +8,7 @@
 - Make sure `git status` is clean.
   - Vite Playground - React, Vue, Vanilla JS, Svelte, etc. Assuming the playground is for React:
     - `git checkout -b react/some-subject`
-    - `npm create vite@latest` answer the questions and create the project. For consistency choose `playground-react` as the project name.
+    - `npm create vite@latest` - https://vite.dev/guide/ - Answer the questions and create the project. For consistency choose `playground-react` as the project name.
     - `cd playground-react`
     - `npm install`
     - `npm run dev`
@@ -17,6 +17,17 @@
     - Make sure the `.gitignore` file is filtering out the unnecessary files and folders properly.
     - `git commit -m "Initial commit"`
     - `git push -u origin react/some-subject`
+  - Next.js Playground:
+    - `git checkout -b next/some-subject`
+    - `npx create-next-app@latest` - https://nextjs.org/docs - Answer the questions and create the project. For consistency choose `playground-next` as the project name.
+    - `cd playground-next`
+    - Dependencies will be installed automatically during the project creation.
+    - `npm run dev`
+    - Apply the necessary changes to the project.
+    - `git add .`
+    - Make sure the `.gitignore` file is filtering out the unnecessary files and folders properly.
+    - `git commit -m "Initial commit"`
+    - `git push -u origin next/some-subject`
 
 
 ## Creating New Playground Template Branch
