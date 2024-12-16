@@ -6,7 +6,7 @@
 ## Creating New Playground Branch
 - Checkout the `main` branch.
 - Make sure `git status` is clean.
-  - React Playground: 
+  - Vite Playground - React, Vue, Vanilla JS, Svelte, etc. Assuming the playground is for React:
     - `git checkout -b react/some-subject`
     - `npm create vite@latest` answer the questions and create the project. For consistency choose `playground-react` as the project name.
     - `cd playground-react`
