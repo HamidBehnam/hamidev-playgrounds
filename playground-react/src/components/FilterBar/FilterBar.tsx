@@ -17,6 +17,11 @@ export const FilterBar = () => {
     clearAllFilters,
   } = useAppStore(state => state);
 
+  //TODO 1: Do not import the entire store, only the necessary actions and state.
+  // This will cause unnecessary re-renders. Use selectors to get the necessary data.
+  //TODO 2: Both React-Query and Zustand have methods to handle the persistence
+  // of the state. Use them instead of manually handling the localStorage.
+
   const throttledFilterData = useThrottle(filterData);
   const filtersAreApplied = useMemo(() =>
     filterData.term ||
