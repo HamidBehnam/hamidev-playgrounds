@@ -39,7 +39,9 @@
     - `conda create --name python-some-subject`
     - `conda activate python-some-subject`
   - In the root of the repository, create a new subdirectory (python package) for the playground. For instance:
-    - `mkdir python_playground` or `mkdir fastapi_playground` Note: The directory name should not contain any hyphen.
+    - `mkdir python_playground` or `mkdir fastapi_playground` 
+    - Note 1: The directory name should not contain any hyphen.
+    - Note 2: Later on you'll be using the same directory name in the Dockerfile. So whenever you change the directory name, make sure to update the Dockerfile as well.
     - `cd python_playground` or `cd fastapi_playground`
     - `touch __init__.py` to make the directory a package. This is because when you import your other modules in Python, the parent directory should also be a package.
   - Make sure the correct Virtual Environment is activated.
