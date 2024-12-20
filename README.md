@@ -66,11 +66,16 @@
     - `conda env create -f environment.yml`
     - Make sure to activate the Virtual Environment before running the server.
     - In case the above command didn't install the packages: `pip install -r requirements.txt`
+  - Check the following Repositories to see how to integrate FastAPI with different services including Cloud SQL, SQLite, Secret Manager, Auth0, etc.:
+    - https://github.com/HamidBehnam/hamidev-playgrounds/tree/fastapi/books-api
+      - This one is using 2 different ways to load the project secret values. One is for the local environment which is loading the secret values from a private repository. The other one is for the Google Cloud Run environment which is loading the secret values from the Secret Manager.
+    - https://github.com/HamidBehnam/hamidev-fastapi-2818
   - More info: https://hamidbehnam.atlassian.net/wiki/spaces/IN/pages/129400856/FastAPI+Cloud+SQL+Secret+Manager+Auth0
+  - To avoid making all of these changes, create a playground template based on all of these changes and everytime that you want to work on a FastAPI project, just create a new branch from the template branch. 
 
 
 ## Creating New Playground Template Branch
-### Note: This is for cases that you want to remove a lot of default templates and have a clean codebase. In most cases the deletion is so minimal, you can just create the branch off of the main branch and run the proper command to create the new project and apply those minimal deletions before you commit the code. The advantage is that you won't get stuck with an outdated codebase.
+**Note: This is for cases that you want to add or remove a lot of default codes. In most cases these default changes are so minimal, you can just create the branch off of the main branch and run the proper command to create the new project and apply those minimal deletions before you commit the code. The advantage is that you won't get stuck with an outdated codebase.**
 
 ---
 - Checkout the `main` branch.
