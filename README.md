@@ -71,7 +71,22 @@
       - This one is using 2 different ways to load the project secret values. One is for the local environment which is loading the secret values from a private repository. The other one is for the Google Cloud Run environment which is loading the secret values from the Secret Manager.
     - https://github.com/HamidBehnam/hamidev-fastapi-2818
   - More info: https://hamidbehnam.atlassian.net/wiki/spaces/IN/pages/129400856/FastAPI+Cloud+SQL+Secret+Manager+Auth0
-  - To avoid making all of these changes, create a playground template based on all of these changes and everytime that you want to work on a FastAPI project, just create a new branch from the template branch. 
+  - To avoid making all of these changes, create a playground template based on all of these changes and everytime that you want to work on a FastAPI project, just create a new branch from the template branch:
+    - Creating a new playground from `playground/fastapi` branch:
+      - `git checkout playground/fastapi`
+      - `git checkout -b fastapi/some-subject`
+      - Update the `name` in the `environment.yml` file to the new branch name without `/`, for instance `name: fastapi-some-subject`.
+      - cd into the `fastapi_playground` directory and run `conda env create -f environment.yml` to create the Virtual Environment.
+      - Make sure to activate the Virtual Environment before running the server.
+      - In case the above command didn't install the packages: `pip install -r requirements.txt`
+      - Set the Python Interpreter to the newly created Virtual Environment in PyCharm.
+    - Checking out a previously created playground branch:
+      - `git checkout fastapi/some-subject`
+      - cd into the `fastapi_playground` directory 
+        - run `conda env create -f environment.yml` to create the Virtual Environment, or if the Virtual Environment is already created, activate it.
+      - Make sure to activate the Virtual Environment before running the server.
+      - In case the above command didn't install the packages: `pip install -r requirements.txt`
+      - Set the Python Interpreter to the newly created Virtual Environment in PyCharm.
 
 
 ## Creating New Playground Template Branch
