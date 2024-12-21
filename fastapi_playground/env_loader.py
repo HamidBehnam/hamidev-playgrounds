@@ -12,6 +12,9 @@ class EnvironmentVariablesRef(BaseSettings):
     AUTH0_AUDIENCE_REF: str
     AUTH0_DOMAIN_REF: str
     AUTH0_ISSUER_REF: str
+    DATABASE_INSTANCE_CONNECTION_NAME_REF: str
+    DATABASE_BUILT_IN_USER_NAME_REF: str
+    DATABASE_BUILT_IN_USER_PASSWORD_REF: str
 
     model_config = SettingsConfigDict(env_file=".env_ref")
 
@@ -27,6 +30,9 @@ class ProcessedEnvironmentVariables:
     AUTH0_AUDIENCE: str
     AUTH0_DOMAIN: str
     AUTH0_ISSUER: str
+    DATABASE_INSTANCE_CONNECTION_NAME: str
+    DATABASE_BUILT_IN_USER_NAME: str
+    DATABASE_BUILT_IN_USER_PASSWORD: str
 
 
 async def get_secret(secret_name: str, project_id: str, client_async) -> str:
@@ -47,6 +53,9 @@ async def fetch_secrets_to_env():
         AUTH0_AUDIENCE=settings_ref.AUTH0_AUDIENCE_REF,
         AUTH0_DOMAIN=settings_ref.AUTH0_DOMAIN_REF,
         AUTH0_ISSUER=settings_ref.AUTH0_ISSUER_REF,
+        DATABASE_INSTANCE_CONNECTION_NAME=settings_ref.DATABASE_INSTANCE_CONNECTION_NAME_REF,
+        DATABASE_BUILT_IN_USER_NAME=settings_ref.DATABASE_BUILT_IN_USER_NAME_REF,
+        DATABASE_BUILT_IN_USER_PASSWORD=settings_ref.DATABASE_BUILT_IN_USER_PASSWORD_REF,
     )
 
     try:

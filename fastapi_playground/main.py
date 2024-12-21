@@ -1,14 +1,14 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends
 from fastapi_playground.core.auth import verify_token
-from fastapi_playground.core.db import create_db_and_tables
+from fastapi_playground.core.db import init_db
 from fastapi_playground.heroes.routes import hero_router
 from fastapi_playground.items.routes import items_router
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    create_db_and_tables()
+    init_db()
     yield
     print("Tearing down")
 
