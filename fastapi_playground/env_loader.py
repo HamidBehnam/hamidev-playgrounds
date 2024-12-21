@@ -5,7 +5,7 @@ from pathlib import Path
 from google.cloud import secretmanager
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-
+# Note: The deployment environments can override the environment variables.
 class EnvironmentVariablesRef(BaseSettings):
     GCP_PROJECT: str
     AUTH0_ALGORITHMS_REF: str

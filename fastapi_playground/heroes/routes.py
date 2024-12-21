@@ -7,14 +7,16 @@ from fastapi_playground.heroes.models import Hero, HeroCreate, HeroPublic, HeroU
 
 hero_router = APIRouter()
 
+# Note: Don't forget to add the trailing slash to the path, e.g. "/heroes/"
 @hero_router.post("/", response_model=HeroPublic)
-async def create_hero(hero: HeroCreate, session: SessionDep) -> Hero:
+async def create_hero(hero: HeroCreate, session: SessionDep):
     hero_db = Hero.model_validate(hero)
     session.add(hero_db)
     session.commit()
     session.refresh(hero_db)
     return hero_db
 
+# Note: Don't forget to add the trailing slash to the path, e.g. "/heroes/"
 @hero_router.get("/", response_model=list[HeroPublic])
 def read_heroes(
     session: SessionDep,

@@ -7,4 +7,4 @@ run-local:
 
 # Docker run command
 run:
-	python env_loader.py && fastapi dev main.py --host 0.0.0.0 --port $(PORT)
+	python env_loader.py && fastapi run main.py --host 0.0.0.0 --port $(PORT)
