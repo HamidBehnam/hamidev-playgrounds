@@ -67,8 +67,11 @@
     - Make sure to activate the Virtual Environment before running the server.
     - In case the above command didn't install the packages: `pip install -r requirements.txt`
   - Check the following Repositories to see how to integrate FastAPI with different services including Cloud SQL, SQLite, Secret Manager, Auth0, etc.:
+    - https://github.com/HamidBehnam/hamidev-playgrounds/tree/playground/fastapi
+      - Based on Auth0 and Cloud SQL
+      - This is using 2 different ways to load the project secret values. One is for the local environment which is loading the secret values from a private repository. The other one is for the Google Cloud Run environment which is loading the secret values from the Secret Manager (Make sure you've exported the path to the service account).
     - https://github.com/HamidBehnam/hamidev-playgrounds/tree/fastapi/books-api
-      - This one is using 2 different ways to load the project secret values. One is for the local environment which is loading the secret values from a private repository. The other one is for the Google Cloud Run environment which is loading the secret values from the Secret Manager.
+      - Based on Auth0 and SQLite
     - https://github.com/HamidBehnam/hamidev-fastapi-2818
   - More info: https://hamidbehnam.atlassian.net/wiki/spaces/IN/pages/129400856/FastAPI+Cloud+SQL+Secret+Manager+Auth0
   - To avoid making all of these changes, create a playground template based on all of these changes and everytime that you want to work on a FastAPI project, just create a new branch from the template branch:
@@ -80,6 +83,9 @@
       - Make sure to activate the Virtual Environment before running the server.
       - In case the above command didn't install the packages: `pip install -r requirements.txt`
       - Set the Python Interpreter to the newly created Virtual Environment in PyCharm.
+      - Go to core/db.py and set the "db" property to the new database name which should be based on the branch name plus `-db` for instance `fastapi-some-subject-db`.
+      - Go to the Cloud SQL Instance and create this new database e.g. `fastapi-some-subject-db`. 
+      - Use either `make run-local` or `make run` to download the `.env` file and run the server.
     - Checking out a previously created playground branch:
       - `git checkout fastapi/some-subject`
       - cd into the `fastapi_playground` directory 
@@ -87,6 +93,8 @@
       - Make sure to activate the Virtual Environment before running the server.
       - In case the above command didn't install the packages: `pip install -r requirements.txt`
       - Set the Python Interpreter to the newly created Virtual Environment in PyCharm.
+      - Go to the Cloud SQL Instance and make sure the database that you're using in `db.py` in the `"db"` property exists, if not create it.
+      - Use either `make run-local` or `make run` to download the `.env` file and run the server.
 
 
 ## Creating New Playground Template Branch
