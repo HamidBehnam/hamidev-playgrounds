@@ -26,7 +26,8 @@
   - The playground also includes the GraphQL integration. You can go to the `<SERVER_URL>/graphql` to see the GraphQL Playground and since it's using the Auth0, you need to pass a valid token in the url as the query param. For instance: `<SERVER_URL>/graphql?token=eyJHsdrfj...`.
   - In order to authenticate or to get the token, you can go directly to the Auth0 dashboard of `dev-5938` tenant, and you can use the `Test` tab of the api to get the token.
     - Since I've created a Postman workspace with the correct Auth0 setting, you can also use the Postman to get the token. The workspace is called `dev-5938`: https://web.postman.co/workspace/dev-5938~00f9cbb5-6e89-41ef-8572-4fa01c26f611/overview
-    - In Postman select the environment in the left and then go to the `Authorization` tab and click on the `Get New Access Token` button. This will open a new window where you can get the token. Check the `Current Token` section of the `Authorization` tab, a token might be already available from your previous tests.
+    - IMPORTANT: Open the workspace in Postman desktop app not the web app.
+    - In Postman select the environment in the left and set the Environment in the top right corner and then go to the `Authorization` tab and click on the `Get New Access Token` button. This will open a new window where you can get the token. Check the `Current Token` section of the `Authorization` tab, a token might be already available from your previous tests.
 
 ## Checking out a previously created playground branch:
   - `git checkout fastapi/some-subject`
