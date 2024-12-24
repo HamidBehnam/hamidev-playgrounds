@@ -1,3 +1,4 @@
+import os
 import time
 import pg8000
 from typing import Annotated
@@ -52,11 +53,21 @@ def prepare_connection():
 def init_db():
     global engine
     engine = prepare_connection()
-    SQLModel.metadata.create_all(engine)
-    # todo:  comment / uncomment the following line to seed data
-    # SQLModel.metadata.drop_all(engine)
-    # SQLModel.metadata.create_all(engine)
-    # seed_data()
+
+    # since "seed" flag controls a one time operation,
+    # and it doesn't include any sensitive information, we will
+    # use an inline environment variable instead of including it in the .env file.
+    db_action = os.getenv("DB_ACTION", "false").lower()
+
+    if db_action == "reset_and_seed":
+        SQLModel.metadata.drop_all(engine)
+        SQLModel.metadata.create_all(engine)
+        seed_data()
+    elif db_action == "reset":
+        SQLModel.metadata.drop_all(engine)
+        SQLModel.metadata.create_all(engine)
+    else:
+        SQLModel.metadata.create_all(engine)
 
 
 def get_session(max_retries=3, initial_wait=1):
