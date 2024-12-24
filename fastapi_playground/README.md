@@ -24,6 +24,9 @@
   - Go to the Cloud SQL Instance and create this new database e.g. `fastapi-some-subject-db`. 
   - Use either `make run-local` or `make run` to download the `.env` file and run the server. Note: you can set the `DB_ACTION` param to reset or seed the database before running the server. See the Makefile for more info.
   - The playground also includes the GraphQL integration. You can go to the `<SERVER_URL>/graphql` to see the GraphQL Playground and since it's using the Auth0, you need to pass a valid token in the url as the query param. For instance: `<SERVER_URL>/graphql?token=eyJHsdrfj...`.
+  - In order to authenticate or to get the token, you can go directly to the Auth0 dashboard of `dev-5938` tenant, and you can use the `Test` tab of the api to get the token.
+    - Since I've created a Postman workspace with the correct Auth0 setting, you can also use the Postman to get the token. The workspace is called `dev-5938`: https://web.postman.co/workspace/dev-5938~00f9cbb5-6e89-41ef-8572-4fa01c26f611/overview
+    - In Postman select the environment in the left and then go to the `Authorization` tab and click on the `Get New Access Token` button. This will open a new window where you can get the token. Check the `Current Token` section of the `Authorization` tab, a token might be already available from your previous tests.
 
 ## Checking out a previously created playground branch:
   - `git checkout fastapi/some-subject`
