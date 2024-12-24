@@ -66,14 +66,12 @@
     - `conda env create -f environment.yml`
     - Make sure to activate the Virtual Environment before running the server.
     - In case the above command didn't install the packages: `pip install -r requirements.txt`
-  - Check the following Repositories to see how to integrate FastAPI with different services including Cloud SQL, SQLite, Secret Manager, Auth0, etc.:
+  - Check the following playground template to see how to integrate FastAPI with different services including GraphQL, Cloud SQL, Secret Manager, Auth0, etc.:
     - https://github.com/HamidBehnam/hamidev-playgrounds/tree/playground/fastapi
       - Based on Auth0 and Cloud SQL
       - This is using 2 different ways to load the project secret values. One is for the local environment which is loading the secret values from a private repository. The other one is for the Google Cloud Run environment which is loading the secret values from the Secret Manager (Make sure you've exported the path to the service account).
-    - https://github.com/HamidBehnam/hamidev-playgrounds/tree/fastapi/books-api
-      - Based on Auth0 and SQLite
     - https://github.com/HamidBehnam/hamidev-fastapi-2818
-  - More info: https://hamidbehnam.atlassian.net/wiki/spaces/IN/pages/129400856/FastAPI+Cloud+SQL+Secret+Manager+Auth0
+  - More integration info in my Jira Confluence documents: https://hamidbehnam.atlassian.net/wiki/spaces/IN/pages/129400856/FastAPI+Cloud+SQL+Secret+Manager+Auth0
   - Note: If the project that you're working on is based on FastAPI, GraphQL, I have created a playground template branch that you can use to create a new playground branch. The template branch is `playground/fastapi`. To see the tech stack that it's using and for more instructions see its README file:
     - https://github.com/HamidBehnam/hamidev-playgrounds/tree/playground/fastapi/fastapi_playground
 
