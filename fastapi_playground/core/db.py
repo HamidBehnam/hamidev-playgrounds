@@ -4,9 +4,12 @@ from typing import Annotated
 from fastapi import Depends
 from sqlalchemy.exc import OperationalError, SQLAlchemyError
 from sqlmodel import SQLModel, create_engine, Session
-from google.cloud.sql.connector import Connector, IPTypes
+from google.cloud.sql.connector import Connector
 from fastapi_playground.core.environment import get_settings
 from fastapi_playground.core.logger import logger
+from fastapi_playground.core.seed_data import employers_data, jobs_data
+from fastapi_playground.employers.models import Employer
+from fastapi_playground.jobs.models import Job
 
 connector = Connector()
 engine = None
@@ -50,6 +53,10 @@ def init_db():
     global engine
     engine = prepare_connection()
     SQLModel.metadata.create_all(engine)
+    # todo:  comment / uncomment the following line to seed data
+    # SQLModel.metadata.drop_all(engine)
+    # SQLModel.metadata.create_all(engine)
+    # seed_data()
 
 
 def get_session(max_retries=3, initial_wait=1):
@@ -67,5 +74,21 @@ def get_session(max_retries=3, initial_wait=1):
             else:
                 logger.error("Max retries exceeded. Giving up.")
                 raise error
+
+
+def seed_data():
+    session = next(get_session())
+
+    try:
+        for employer in employers_data:
+            emp = Employer(**employer)
+            session.add(emp)
+
+        for job in jobs_data:
+            session.add(Job(**job))
+
+        session.commit()
+    finally:
+        session.close()
 
 SessionDep = Annotated[Session, Depends(get_session)]
