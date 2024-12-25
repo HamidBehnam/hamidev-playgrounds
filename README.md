@@ -96,6 +96,7 @@
 - Push the changes to the new branch.
 
 ## Upgrading Playground Template Branches
+- In most cases, you won't need to completely delete and re-create the playground template branches. You can just upgrade the existing branches. If that's not the case, you can follow the instructions below.
 - Before deleting the template branch and creating a new one, take a look at its README file to see the tech stack that it's using and decide if you want to delete it or you prefer to create another version for the template.
 - In case you want to delete it copy the README file to your local machine as you might need to re-configure all the tech stack that the previous one was using.
 - Delete the playground branch on git and locally and follow the instructions above to create a new playground.
