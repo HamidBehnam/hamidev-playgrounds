@@ -1,9 +1,9 @@
 ## Project Structure
 
-- `main` branch is the root branch of the project which is intentionally empty. All the playground branches should be created from the `main` branch.
-- `playground` branches are the branches that their purpose is to provide the clean code.
+- `main` branch is the root branch of the project which is intentionally almost empty, it only includes the files common in all projects such as a `.editorconfig`.
+- `template/XYZ` branches are template branches designed to streamline the process of creating playgrounds. They include common changes that would otherwise need to be manually integrated into each related playground.
 
-## Creating New Playground Branch
+## Creating New Playground Branch From Scratch
 **Note: Before creating a new playground branch, make sure that you're on the `main` branch and run `git status` to make sure that the working directory is clean.**
 
 ---
@@ -67,13 +67,13 @@
     - Make sure to activate the Virtual Environment before running the server.
     - In case the above command didn't install the packages: `pip install -r requirements.txt`
   - Check the following playground template to see how to integrate FastAPI with different services including GraphQL, Cloud SQL, Secret Manager, Auth0, etc.:
-    - https://github.com/HamidBehnam/hamidev-playgrounds/tree/playground/fastapi
+    - https://github.com/HamidBehnam/hamidev-playgrounds/tree/template/fastapi
       - Based on Auth0 and Cloud SQL
       - This is using 2 different ways to load the project secret values. One is for the local environment which is loading the secret values from a private repository. The other one is for the Google Cloud Run environment which is loading the secret values from the Secret Manager (Make sure you've exported the path to the service account).
     - https://github.com/HamidBehnam/hamidev-fastapi-2818
   - More integration info in my Jira Confluence documents: https://hamidbehnam.atlassian.net/wiki/spaces/IN/pages/129400856/FastAPI+Cloud+SQL+Secret+Manager+Auth0
-  - Note: If the project that you're working on is based on FastAPI, GraphQL, I have created a playground template branch that you can use to create a new playground branch. The template branch is `playground/fastapi`. To see the tech stack that it's using and for more instructions see its README file:
-    - https://github.com/HamidBehnam/hamidev-playgrounds/tree/playground/fastapi/fastapi_playground
+  - Note: If the project that you're working on is based on FastAPI, GraphQL, I have created a playground template branch that you can use to create a new playground branch. The template branch is `template/fastapi`. To see the tech stack that it's using and for more instructions see its README file:
+    - https://github.com/HamidBehnam/hamidev-playgrounds/tree/template/fastapi/fastapi_playground
 
 
 ## Creating New Playground Template Branch
@@ -82,7 +82,7 @@
 ---
 - Checkout the `main` branch.
 - Make sure `git status` is clean.
-- Create a new branch from the `main` branch with the following naming convention: `playground/XYZ`. For instance, if you're creating a Next.js playground, you can name the branch `playground/next`.
+- Create a new branch from the `main` branch with the following naming convention: `template/XYZ`. For instance, if you're creating a Next.js playground, you can name the branch `template/next`.
 - Since the template branches are also a playground branch, you can follow the instructions above to create a new playground branch for different type of projects.
 - Make sure the new folder is created for the new project and the project's files are not in the root of the repository.
 - If there are some common changes that you'd like to apply to the playground branches, you can apply them now. For instance:
@@ -99,9 +99,9 @@
 - In most cases, you won't need to completely delete and re-create the playground template branches. You can just upgrade the existing branches. If that's not the case, you can follow the instructions below.
 - Before deleting the template branch and creating a new one, take a look at its README file to see the tech stack that it's using and decide if you want to delete it or you prefer to create another version for the template.
 - In case you want to delete it copy the README file to your local machine as you might need to re-configure all the tech stack that the previous one was using.
-- Delete the playground branch on git and locally and follow the instructions above to create a new playground.
+- Delete the playground template branch on git and locally and follow the instructions above to create a new playground template branch.
 
 ## General Instructions
 - `main` branch is meant to be empty and should not be used for development.
-- `playground/XYZ` branches are template branches and usually should not be changed unless there's a common change that you'd want to apply to all the future working branching or if you'd want to upgrade the playground to a different version.
-- In order to use a playground, you can create a new branch from the playground branch for instance if you want to use `playgroun/XYZ`, create `XYZ/some-subject` branch and start working on the new branch.
+- `template/XYZ` branches are template branches and usually should not be changed unless there's a common change that you'd want to apply to all the future playground branches.
+- In order to use a template, you can create a new branch from the template branch for instance if you want to use `template/XYZ`, create `XYZ/some-subject` branch off of `tmeplate/XYZ` and start working on the new branch.
