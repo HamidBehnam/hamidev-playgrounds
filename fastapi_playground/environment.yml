@@ -1,4 +1,4 @@
-name: template-fastapi
+name: fastapi-bff
 channels:
   - defaults
 dependencies:
@@ -97,4 +97,4 @@ dependencies:
       - watchfiles==1.0.3
       - websockets==14.1
       - yarl==1.18.3
-prefix: /opt/anaconda3/envs/template-fastapi
+prefix: /opt/anaconda3/envs/fastapi-bff

@@ -25,7 +25,7 @@ def prepare_connection():
             "pg8000",
             user=settings.DATABASE_BUILT_IN_USER_NAME,
             password=settings.DATABASE_BUILT_IN_USER_PASSWORD,
-            db="replace-this-with-your-db-name",
+            db="fastapi-bff-db",
         )
         return conn
 
