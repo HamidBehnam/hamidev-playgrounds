@@ -77,7 +77,7 @@
 
 
 ## Creating New Playground Template Branch
-**Note: This is for cases that you want to add or remove a lot of default codes. In most cases these default changes are so minimal, you can just create the branch off of the main branch and run the proper command to create the new project and apply those minimal deletions before you commit the code. The advantage is that you won't get stuck with an outdated codebase.**
+**Note: This is for cases that you want to add or remove a lot of default codes. If these changes are minimal, you can just create the branch off of the main branch and run the proper command to create the new project and apply those minimal deletions before you commit the code. The advantage is that you won't get stuck with an outdated codebase.**
 
 ---
 - Checkout the `main` branch.
@@ -92,8 +92,12 @@
   - Add a `.editorconfig` file to the root of the project to ensure that the code style is consistent. 
 - Push the changes to the new branch.
 
+## Upgrading Playground Template Branches
+- Before deleting the template branch and creating a new one, take a look at its README file to see the tech stack that it's using and decide if you want to delete it or you prefer to create another version for the template.
+- In case you want to delete it copy the README file to your local machine as you might need to re-configure all the tech stack that the previous one was using.
+- Delete the playground branch on git and locally and follow the instructions above to create a new playground.
+
 ## General Instructions
 - `main` branch is meant to be empty and should not be used for development.
 - `playground/XYZ` branches usually should not be changed unless there's a common change that you'd want to apply to all the future working branching or if you'd want to upgrade the playground to a different version.
-- If you're upgrading the playground to a different version, you can delete the playground branch on git and locally and follow the instructions above to create a new playground.
 - In order to use a playground, you can create a new branch from the playground branch for instance if you want to use `playgroun/XYZ`, create `XYZ/some-subject` branch and start working on the new branch.
