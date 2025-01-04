@@ -1,7 +1,6 @@
 import strawberry
 from typing import List, TYPE_CHECKING, Optional
 from sqlmodel import select
-from fastapi_playground.core.db import get_session
 from fastapi_playground.jobs.models import Job
 
 if TYPE_CHECKING:
@@ -11,15 +10,15 @@ if TYPE_CHECKING:
 
 def get_jobs(info: strawberry.Info) -> List["JobType"]:
     print("current user: ", info.context.get("current_user"))
-    session = next(get_session())
+    session = info.context.get("session")
     return session.exec(select(Job)).all()
 
 def get_job(info: strawberry.Info, id: str) -> "JobType":
-    session = next(get_session())
+    session = info.context.get("session")
     return session.get(Job, id)
 
 def create_job(info: strawberry.Info, title: str, description: str, employer_id: int) -> "JobType":
-    session = next(get_session())
+    session = info.context.get("session")
     job = Job(title=title, description=description, employer_id=employer_id)
     session.add(job)
     session.commit()
@@ -28,7 +27,7 @@ def create_job(info: strawberry.Info, title: str, description: str, employer_id:
 
 def update_job(info: strawberry.Info, id: str, title: Optional[str] = None, description: Optional[str] = None, employer_id: Optional[int] = None) -> "JobType":
     print("current user: ", info.context.get("current_user"))
-    session = next(get_session())
+    session = info.context.get("session")
     job = session.get(Job, id)
     if job is None:
         raise Exception("Job not found")
@@ -43,7 +42,7 @@ def update_job(info: strawberry.Info, id: str, title: Optional[str] = None, desc
     return job
 
 def delete_job(info: strawberry.Info, id: str) -> bool:
-    session = next(get_session())
+    session = info.context.get("session")
     job = session.get(Job, id)
     if job is None:
         raise Exception("Job not found")
