@@ -3,11 +3,13 @@ from fastapi.security import HTTPAuthorizationCredentials
 from strawberry import Schema
 from strawberry.fastapi import GraphQLRouter
 from fastapi_playground.core.auth import verify_token
+from fastapi_playground.core.db import SessionDep
 from fastapi_playground.graphql.types import Query, Mutation
 
 
 async def get_context(
     request: Request,
+    session: SessionDep
 ):
     headers_dict = dict(request.headers)
 
@@ -22,6 +24,7 @@ async def get_context(
 
     return {
         "current_user": payload,
+        "session": session
     }
 
 schema = Schema(query=Query, mutation=Mutation)

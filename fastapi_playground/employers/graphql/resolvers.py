@@ -1,7 +1,6 @@
 from strawberry import Info
 from typing import List, TYPE_CHECKING, Optional
 from sqlmodel import select
-from fastapi_playground.core.db import get_session
 from fastapi_playground.employers.models import Employer
 
 if TYPE_CHECKING:
@@ -10,15 +9,15 @@ if TYPE_CHECKING:
 
 
 def get_employers(info: Info) -> List["EmployerType"]:
-    session = next(get_session())
+    session = info.context.get("session")
     return session.exec(select(Employer)).all()
 
 def get_employer(info: Info, id: str) -> "EmployerType":
-    session = next(get_session())
+    session = info.context.get("session")
     return session.get(Employer, id)
 
 def create_employer(info: Info, name: str, email: str, industry: str) -> "EmployerType":
-    session = next(get_session())
+    session = info.context.get("session")
     employer = Employer(name=name, email=email, industry=industry)
     session.add(employer)
     session.commit()
@@ -26,7 +25,7 @@ def create_employer(info: Info, name: str, email: str, industry: str) -> "Employ
     return employer
 
 def update_employer(info: Info, id: str, name: Optional[str] = None, email: Optional[str] = None, industry: Optional[str] = None) -> "EmployerType":
-    session = next(get_session())
+    session = info.context.get("session")
     employer = session.get(Employer, id)
     if employer is None:
         raise Exception("Employer not found")
@@ -41,7 +40,7 @@ def update_employer(info: Info, id: str, name: Optional[str] = None, email: Opti
     return employer
 
 def delete_employer(info: Info, id: str) -> bool:
-    session = next(get_session())
+    session = info.context.get("session")
     employer = session.get(Employer, id)
     if employer is None:
         raise Exception("Employer not found")
