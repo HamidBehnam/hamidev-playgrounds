@@ -2,18 +2,34 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import LoginButton from "./components/LoginButton/LoginButton.tsx";
+import LogoutButton from "./components/LogoutButton/LogoutButton.tsx";
+import {useAuth0} from "@auth0/auth0-react";
 
 function App() {
   const [count, setCount] = useState(0)
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <LoginButton />;
+  }
 
   return (
     <>
+      <LogoutButton />
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={user?.picture} className="logo react" alt="React logo" />
         </a>
       </div>
       <h1>Vite + React</h1>
