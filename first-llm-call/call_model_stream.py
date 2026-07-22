@@ -9,7 +9,7 @@ CLIENT: Anthropic = Anthropic()
 def call_model_stream(
     *,
     messages: list[MessageParam],
-    model: str = DEFAULT_MODEL,
+    model: ModelParam = DEFAULT_MODEL,
     max_tokens: int = DEFAULT_MAX_TOKENS,
 ) -> None:
     stream: Stream[RawMessageStreamEvent] = CLIENT.messages.create(
@@ -20,7 +20,7 @@ def call_model_stream(
     )
 
     for event in stream:
-        if event.type == 'content_block_delta':
+        if event.type == 'content_block_delta' and event.delta.type == 'text_delta':
             print(event.delta.text, flush=True, end="")
 
     print()
