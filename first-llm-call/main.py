@@ -3,6 +3,7 @@ from translate import translate
 from call_model import call_model
 from chat import chat
 from anthropic.types import MessageParam
+from call_model_stream import call_model_stream
 
 
 def main() -> int:
@@ -19,6 +20,11 @@ def main() -> int:
 
     translated = translate(word="hello", language="french")
     print(f"translation result: {translated}")
+
+    call_model_stream(messages=[{
+        "role": "user",
+        "content": "Provide the current stage of beteljoose star life. did I use the name of the star correctly?"
+    }])
 
     chat()
 
