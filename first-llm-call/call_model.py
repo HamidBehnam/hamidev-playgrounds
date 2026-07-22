@@ -1,9 +1,9 @@
 from anthropic import Anthropic
-from anthropic.types import Message, MessageParam
+from anthropic.types import Message, MessageParam, ModelParam
 
-DEFAULT_MODEL = "claude-haiku-4-5-20251001"
-DEFAULT_MAX_TOKENS = 1000
-CLIENT = Anthropic()
+DEFAULT_MODEL: ModelParam = "claude-haiku-4-5-20251001"
+DEFAULT_MAX_TOKENS: int = 1000
+CLIENT: Anthropic = Anthropic()
 
 
 def call_model(
