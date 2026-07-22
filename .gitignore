@@ -1,6 +1,9 @@
-# IDE
+# Intellij
 /.idea
-/.vscode
+
+# VSCode
+/.vscode/*
+!/.vscode/launch.json
 
 # Environment
 .env
