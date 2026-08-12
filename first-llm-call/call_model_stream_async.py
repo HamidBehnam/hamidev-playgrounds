@@ -1,9 +1,8 @@
-from anthropic import AsyncAnthropic, AsyncStream
+from anthropic import AsyncStream
 from anthropic.types import MessageParam, ModelParam, RawMessageStreamEvent
 
-DEFAULT_MODEL: ModelParam = "claude-haiku-4-5-20251001"
-DEFAULT_MAX_TOKENS: int = 1000
-CLIENT: AsyncAnthropic = AsyncAnthropic()
+from client import get_async_client
+from config import DEFAULT_MAX_TOKENS, DEFAULT_MODEL
 
 
 async def call_model_stream_async(
@@ -12,7 +11,7 @@ async def call_model_stream_async(
     model: ModelParam = DEFAULT_MODEL,
     max_tokens: int = DEFAULT_MAX_TOKENS,
 ) -> None:
-    stream: AsyncStream[RawMessageStreamEvent] = await CLIENT.messages.create(
+    stream: AsyncStream[RawMessageStreamEvent] = await get_async_client().messages.create(
         model=model,
         max_tokens=max_tokens,
         messages=messages,

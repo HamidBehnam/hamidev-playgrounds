@@ -1,9 +1,7 @@
-from anthropic import AsyncAnthropic
 from anthropic.types import Message, MessageParam, ModelParam
 
-DEFAULT_MODEL: ModelParam = "claude-haiku-4-5-20251001"
-DEFAULT_MAX_TOKENS: int = 1000
-CLIENT: AsyncAnthropic = AsyncAnthropic()
+from client import get_async_client
+from config import DEFAULT_MAX_TOKENS, DEFAULT_MODEL
 
 
 async def call_model_async(
@@ -12,7 +10,7 @@ async def call_model_async(
     model: ModelParam = DEFAULT_MODEL,
     max_tokens: int = DEFAULT_MAX_TOKENS,
 ) -> None:
-    response: Message = await CLIENT.messages.create(
+    response: Message = await get_async_client().messages.create(
         model=model,
         max_tokens=max_tokens,
         messages=messages,

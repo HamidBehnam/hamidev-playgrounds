@@ -1,9 +1,8 @@
-from anthropic import Anthropic, Stream
+from anthropic import Stream
 from anthropic.types import MessageParam, ModelParam, RawMessageStreamEvent
 
-DEFAULT_MODEL: ModelParam = "claude-haiku-4-5-20251001"
-DEFAULT_MAX_TOKENS: int = 1000
-CLIENT: Anthropic = Anthropic()
+from client import get_client
+from config import DEFAULT_MAX_TOKENS, DEFAULT_MODEL
 
 
 def call_model_stream(
@@ -12,7 +11,7 @@ def call_model_stream(
     model: ModelParam = DEFAULT_MODEL,
     max_tokens: int = DEFAULT_MAX_TOKENS,
 ) -> None:
-    stream: Stream[RawMessageStreamEvent] = CLIENT.messages.create(
+    stream: Stream[RawMessageStreamEvent] = get_client().messages.create(
         model=model,
         max_tokens=max_tokens,
         messages=messages,

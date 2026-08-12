@@ -16,7 +16,7 @@ async def main() -> int:
         "content": "Provide the current stage of Sun star life. did I use the name of the star correctly?",
     }
 
-    call_model(messages=[message])
+    print(call_model(messages=[message]))
 
     translated = translate(word="hello", language="french")
     print(f"translation result: {translated}")
