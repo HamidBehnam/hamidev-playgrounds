@@ -17,7 +17,7 @@ def call_model_stream_auto_cleaning(
         stream=True,
     ) as stream:
         for event in stream:
-            if event.type == 'content_block_delta' and event.delta.type == 'text_delta':
+            if event.type == "content_block_delta" and event.delta.type == "text_delta":
                 print(event.delta.text, flush=True, end="")
 
     print()

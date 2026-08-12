@@ -20,7 +20,7 @@ def call_model_stream(
 
     try:
         for event in stream:
-            if event.type == 'content_block_delta' and event.delta.type == 'text_delta':
+            if event.type == "content_block_delta" and event.delta.type == "text_delta":
                 print(event.delta.text, flush=True, end="")
     finally:
         stream.close()

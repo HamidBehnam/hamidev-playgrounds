@@ -11,7 +11,9 @@ async def call_model_stream_async(
     model: ModelParam = DEFAULT_MODEL,
     max_tokens: int = DEFAULT_MAX_TOKENS,
 ) -> None:
-    stream: AsyncStream[RawMessageStreamEvent] = await get_async_client().messages.create(
+    stream: AsyncStream[
+        RawMessageStreamEvent
+    ] = await get_async_client().messages.create(
         model=model,
         max_tokens=max_tokens,
         messages=messages,
@@ -20,7 +22,7 @@ async def call_model_stream_async(
 
     try:
         async for event in stream:
-            if event.type == 'content_block_delta' and event.delta.type == 'text_delta':
+            if event.type == "content_block_delta" and event.delta.type == "text_delta":
                 print(event.delta.text, flush=True, end="")
     finally:
         await stream.close()

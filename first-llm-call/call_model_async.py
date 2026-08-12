@@ -18,4 +18,3 @@ async def call_model_async(
 
     result = "".join(block.text for block in response.content if block.type == "text")
     print(result)
-

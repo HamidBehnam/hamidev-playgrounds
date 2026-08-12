@@ -13,7 +13,12 @@ async def main() -> int:
         return 1
     message: MessageParam = {
         "role": "user",
-        "content": "Provide the current stage of Sun star life. did I use the name of the star correctly?",
+        "content": [
+            {
+                "type": "text",
+                "text": "Provide the current stage of Sun star life. did I use the name of the star correctly?",
+            }
+        ],
     }
 
     print(call_model(messages=[message]))
@@ -21,10 +26,19 @@ async def main() -> int:
     translated = translate(word="hello", language="french")
     print(f"translation result: {translated}")
 
-    call_model_stream_auto_cleaning(messages=[{
-        "role": "user",
-        "content": "Provide the current stage of beteljoose star life. did I use the name of the star correctly?"
-    }])
+    star_messages: list[MessageParam] = [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "Provide the current stage of beteljoose star life. did I use the name of the star correctly?",
+                }
+            ],
+        }
+    ]
+
+    call_model_stream_auto_cleaning(messages=star_messages)
 
     chat()
 
