@@ -1,10 +1,13 @@
-import os
-from translate import translate
-from call_model import call_model
-from chat import chat
-from anthropic.types import MessageParam
-from call_model_stream_auto_cleaning import call_model_stream_auto_cleaning
 import asyncio
+import os
+
+from anthropic.types import MessageParam
+
+from call_model import call_model
+from call_model_stream_auto_cleaning import call_model_stream_auto_cleaning
+from chat import chat
+from demo_extraction import demo_extraction
+from translate import translate
 
 
 async def main() -> int:
@@ -39,6 +42,8 @@ async def main() -> int:
     ]
 
     call_model_stream_auto_cleaning(messages=star_messages)
+
+    demo_extraction()
 
     chat()
 
